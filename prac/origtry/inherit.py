@@ -22,6 +22,7 @@ class Teacher(SchoolMember):
     def tell(self):
         SchoolMember.tell(self)
         print 'Salary:"%d"'%self.salary
+        print 'teacher\' selfage is',self.age
 
 class Student(SchoolMember):
     '''represents a student'''

@@ -18,5 +18,5 @@ class person(object):
     def __str__(self):
         return self._path
 
-print person().user('').haha.hehe.hihi
+print person().user('').user('').haha.hehe.hihi
         

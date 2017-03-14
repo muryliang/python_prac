@@ -24,3 +24,5 @@ for name,address in ab.items():
 if 'Guido' in ab: #OR ab.has_key('Guido')
     print "\nGuido's address is %s"%ab['Guido']
     
+if 'spammer@hotmail.com' in ab: #OR ab.has_key('Guido')
+    print "\nGuido's address is %s"%ab['spammer@hotmail.com']

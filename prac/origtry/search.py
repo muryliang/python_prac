@@ -12,7 +12,7 @@ def search(path):
             else: #subdir
                 search(fullname)
     except StandardError,e:
-        print '%s; path: %s'%(e,path)
+        print '%s;haha path: %s'%(e,path)
     
 
 mypath = raw_input('enter a path=>')

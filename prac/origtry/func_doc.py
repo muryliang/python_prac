@@ -4,7 +4,7 @@
 def printMax(a,b):
     '''prints the maxmum of the two numbers.
 
-then two values should be integers'''
+    then two values should be integers'''
     x=int(a)
     y=int(b)
 

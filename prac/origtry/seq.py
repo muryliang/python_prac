@@ -4,6 +4,7 @@
 shoplist=['apple','mango','carrot','banana']
 
 #indexing or 'Subscription' operation
+print 'origin is',shoplist
 print 'Item 0 is',shoplist[0]
 print 'Item 1 is',shoplist[1]
 print 'Item 2 is',shoplist[2]
@@ -22,3 +23,4 @@ print 'Character 1 to 3 is',name[1:3]
 print 'Character 2 to end is',name[2:]
 print 'Character 1 to -1 is',name[1:-1]
 print 'Character start to end is',name[:]
+print 'Character start to overflow is',name[:100]
