@@ -3,3 +3,7 @@ check method:
 
 spell error
 " and ' 
+
+forget % after string and before formater vars
+
+def function not with a trailing ':'
