@@ -1,0 +1,16 @@
+use utf-8 code
+function use def xxx():
+	return , should auto ident
+var use = 
+/ will drop percent
+string use "" '' ''' """
+\b \r to back \t \v \f to skip
+print 'xxx'%(x,x) to print
+use raw_input() get input
+pydoc2 to document see
+open, read, close , to do with file
+from sys import argv ,can use cmdline args
+a,b,c,d = argv (unpack,number should match)
+
+len, return string
+
