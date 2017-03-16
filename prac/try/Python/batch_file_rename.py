@@ -57,7 +57,8 @@ def main():
     # Set the variable new_ext with the third argument passed
     new_ext = args['new_ext'][0]
 
-    batch_rename(work_dir, old_ext, new_ext)
+    print "workdir oldext new ext", work_dir, old_ext, new_ext
+#    batch_rename(work_dir, old_ext, new_ext)
 
 
 if __name__ == '__main__':

@@ -7,3 +7,5 @@ spell error
 forget % after string and before formater vars
 
 def function not with a trailing ':'
+
+function: when pass param, check type! or will cause error
