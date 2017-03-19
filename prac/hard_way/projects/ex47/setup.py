@@ -7,16 +7,15 @@ except ImportError:
 
 config = {
 		'description': 'My Project',
-		'author': 'sora',
+		'author': 'My Name',
 		'url': 'URL to get it at.',
 		'download_url': 'Where to download it.',
 		'author_email': 'My email.',
 		'version': '0.1',
 		'install_requires': ['nose'],
-		'packages': ['sora']
-		'scripts': ['__init__.py'],
+		'packages': ['NAME']
+		'scripts': [],
 		'name': 'projectname'
 }
 
 setup(**config)
-print 'I am in setup.py'
