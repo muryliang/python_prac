@@ -1,20 +1,20 @@
 import web
 
 urls = (
-	'/(.*)', 'hello'
+	'/hello', 'Index'
 )
 
 app = web.application(urls, globals())
-db = web.database(dbn='postgres', user='username', pw='password', db='dbname')
 render = web.template.render('templates/')
 
-class hello:
-	def GET(self, name):
-#		greeting = "Hello World"
-#		return render.index(greeting = greeting)
-#		print render.hello('haha')
-#		i = web.input(name=None)
-		return render.hello(name)
+class Index:
+	def GET(self):
+            form = web.input(name="Nobody", greet=None)
+            if form.greet:
+                greeting = "Hello, %s and %s" %(form.name, form.greet)
+                return render.hello(greeting = greeting)
+            else:
+                return "Error, we need a greet name"
 
 if __name__ == "__main__":
 	app.run()

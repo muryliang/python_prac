@@ -1,0 +1,18 @@
+$def with (greeting)
+
+<html>
+	<head>
+		<title>Gothons Of Planet Percal #25</title>
+	</head>
+<body>
+
+$if greeting:
+	<p>I just <em>wanted</em> to say <em style="color: green; front-size: 2em;">$greeting</em></p>
+$else:
+	<em>Hello</em>, world!
+<form action="/hello" method="GET">
+	<input type="submit">
+</form>
+
+</body>
+</html>
