@@ -1,6 +1,8 @@
-$def with (name)
-
-$if name:
-	I just wanted to say <em>hello</em> to $name
-$else:
-	<em>hello world!</em>
+$def with (todos)
+<ul>
+$for todo in todos:
+	<li id="t$todo.id">$todo.title</li>
+</ul>
+<form method="post" action="add">
+	<p><input type="text" name="title" /> <input type="submit" value="Add" /></p>
+</form>
