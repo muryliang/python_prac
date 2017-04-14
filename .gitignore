@@ -2,3 +2,4 @@
 *.ko
 *.exe
 *.pyc
+MNIST_data/
