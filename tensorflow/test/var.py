@@ -9,3 +9,5 @@ ass = tf.assign(w1, w2, validate_shape=False)
 with tf.Session() as sess:
     sess.run(tf.initialize_all_variables())
     print sess.run(ass)
+    print w1.eval()
+    print type(w1.eval())
