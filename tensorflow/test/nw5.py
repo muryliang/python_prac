@@ -48,5 +48,3 @@ with tf.Session() as sess:
                 print sess.run(i,  feed_dict = {X: x_input[start:end], Y: y_input[start:end]})
             print "end loss"
             print sess.run(loss, feed_dict = {X: x_input[start:end], Y: y_input[start:end]})
-    
-
