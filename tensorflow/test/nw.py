@@ -10,9 +10,11 @@ y_ = tf.placeholder(tf.float32, shape=(None, 1), name = "y-input")
 
 a = tf.matmul(x, w1)
 y = tf.matmul(a, w2)
+global_step = tf.Variable(0)
 
 cross_entropy = -tf.reduce_mean(y_*tf.log(tf.clip_by_value(y, 1e-10, 1)))
-train_step = tf.train.AdamOptimizer(0.001).minimize(cross_entropy)
+learn_rate = tf.train.exponential_decay(0.1, global_step, 128/8, 0.96, staircase=True)
+train_step = tf.train.AdamOptimizer(learn_rate).minimize(cross_entropy, global_step = global_step)
 
 rdm = RandomState(1)
 datasize = 128
