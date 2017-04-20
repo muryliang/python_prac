@@ -30,7 +30,7 @@ def train(mnist):
     x = tf.placeholder(tf.float32, [None, input_node], name = "x-input")
     y_ = tf.placeholder(tf.float32, [None, output_node] , name = "y-input")
 
-    y = predict(x, None, w1, b1, w2, b2) # get batch predict result
+    y = predict(x, None, w2, b1, w2, b2) # get batch predict result
 
     global_step = tf.Variable(0, trainable=False)
     variable_average = tf.train.ExponentialMovingAverage(
