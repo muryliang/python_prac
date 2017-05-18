@@ -1,0 +1,166 @@
+1494920499961	geckodriver	INFO	Listening on 127.0.0.1:59833
+1494920501195	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1494920506169	Marionette	INFO	Listening on port 41569
+1494920506305	Marionette	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 32175] WARNING: pipe error (3): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+1494920989490	geckodriver	INFO	Listening on 127.0.0.1:35295
+1494920990545	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1494920993710	Marionette	INFO	Listening on port 33603
+1494920993793	Marionette	WARN	TLS certificate errors will be ignored for this session
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+JavaScript error: http://site1.zjou.edu.cn/fish/fish_menu.asp, line 1: TypeError: window.event is undefined
+JavaScript error: http://site1.zjou.edu.cn/fish/fish_menu.asp, line 1: TypeError: window.event is undefined
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: el.tagName is undefined
+Full stack: getElementTagName@chrome://marionette/content/listener.js:1288:3
+dispatch/</req<@chrome://marionette/content/listener.js:365:22
+TaskImpl_run@resource://gre/modules/Task.jsm:319:42
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+dispatch/<@chrome://marionette/content/listener.js:363:15
+
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: el.tagName is undefined
+Full stack: getElementTagName@chrome://marionette/content/listener.js:1288:3
+dispatch/</req<@chrome://marionette/content/listener.js:365:22
+TaskImpl_run@resource://gre/modules/Task.jsm:319:42
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+dispatch/<@chrome://marionette/content/listener.js:363:15
+
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: Argument 1 of Window.getComputedStyle does not implement interface Element.
+Full stack: ra@chrome://marionette/content/atom.js:116:629
+W@chrome://marionette/content/atom.js:121:145
+Aa@chrome://marionette/content/atom.js:126:65
+Da@chrome://marionette/content/atom.js:128:344
+atom.getElementText/<@chrome://marionette/content/atom.js:129:91
+atom.getElementText@chrome://marionette/content/atom.js:105:57
+getElementText@chrome://marionette/content/listener.js:1274:10
+dispatch/</req<@chrome://marionette/content/listener.js:365:22
+TaskImpl_run@resource://gre/modules/Task.jsm:319:42
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+dispatch/<@chrome://marionette/content/listener.js:363:15
+
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: Argument 1 of Window.getComputedStyle does not implement interface Element.
+Full stack: ra@chrome://marionette/content/atom.js:116:629
+W@chrome://marionette/content/atom.js:121:145
+Aa@chrome://marionette/content/atom.js:126:65
+Da@chrome://marionette/content/atom.js:128:344
+atom.getElementText/<@chrome://marionette/content/atom.js:129:91
+atom.getElementText@chrome://marionette/content/atom.js:105:57
+getElementText@chrome://marionette/content/listener.js:1274:10
+dispatch/</req<@chrome://marionette/content/listener.js:365:22
+TaskImpl_run@resource://gre/modules/Task.jsm:319:42
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+dispatch/<@chrome://marionette/content/listener.js:363:15
+
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: a.getAttributeNode is not a function
+Full stack: U@chrome://marionette/content/atom.js:102:160
+V@chrome://marionette/content/atom.js:102:731
+atom.getElementAttribute/<@chrome://marionette/content/atom.js:103:195
+atom.getElementAttribute@chrome://marionette/content/atom.js:93:68
+element.isXULElement@chrome://marionette/content/element.js:1036:12
+element.isVisible@chrome://marionette/content/element.js:917:8
+seleniumClickElement@chrome://marionette/content/interaction.js:203:8
+TaskImpl_run@resource://gre/modules/Task.jsm:319:42
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+TaskImpl_handleResultValue@resource://gre/modules/Task.jsm:389:16
+TaskImpl_run@resource://gre/modules/Task.jsm:327:15
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+TaskImpl_handleResultValue@resource://gre/modules/Task.jsm:389:16
+TaskImpl_run@resource://gre/modules/Task.jsm:327:15
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+dispatch/<@chrome://marionette/content/listener.js:363:15
+
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: a.getAttributeNode is not a function
+Full stack: U@chrome://marionette/content/atom.js:102:160
+V@chrome://marionette/content/atom.js:102:731
+atom.getElementAttribute/<@chrome://marionette/content/atom.js:103:195
+atom.getElementAttribute@chrome://marionette/content/atom.js:93:68
+element.isXULElement@chrome://marionette/content/element.js:1036:12
+element.isVisible@chrome://marionette/content/element.js:917:8
+seleniumClickElement@chrome://marionette/content/interaction.js:203:8
+TaskImpl_run@resource://gre/modules/Task.jsm:319:42
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+TaskImpl_handleResultValue@resource://gre/modules/Task.jsm:389:16
+TaskImpl_run@resource://gre/modules/Task.jsm:327:15
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+TaskImpl_handleResultValue@resource://gre/modules/Task.jsm:389:16
+TaskImpl_run@resource://gre/modules/Task.jsm:327:15
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+dispatch/<@chrome://marionette/content/listener.js:363:15
+
+*************************
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: a.getAttributeNode is not a function
+Full stack: U@chrome://marionette/content/atom.js:102:160
+V@chrome://marionette/content/atom.js:102:731
+atom.getElementAttribute/<@chrome://marionette/content/atom.js:103:195
+atom.getElementAttribute@chrome://marionette/content/atom.js:93:68
+element.isXULElement@chrome://marionette/content/element.js:1036:12
+element.isVisible@chrome://marionette/content/element.js:917:8
+seleniumClickElement@chrome://marionette/content/interaction.js:203:8
+TaskImpl_run@resource://gre/modules/Task.jsm:319:42
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+TaskImpl_handleResultValue@resource://gre/modules/Task.jsm:389:16
+TaskImpl_run@resource://gre/modules/Task.jsm:327:15
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+TaskImpl_handleResultValue@resource://gre/modules/Task.jsm:389:16
+TaskImpl_run@resource://gre/modules/Task.jsm:327:15
+TaskImpl@resource://gre/modules/Task.jsm:277:3
+asyncFunction@resource://gre/modules/Task.jsm:252:14
+Task_spawn@resource://gre/modules/Task.jsm:166:12
+dispatch/<@chrome://marionette/content/listener.js:363:15
+
+*************************
