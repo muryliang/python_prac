@@ -18,7 +18,7 @@ lst = ['Anguilla marmorata'] # have no internal pic
 csvfile = "/tmp/fishsorts.dat"
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
-engname, chiname = fishnames['engname'], fishnames['chiname']
+engname, chiname = fishnames['engname'][:5], fishnames['chiname'][:5]
 
 datafile = "/tmp/twbase_datafile.dat"
 if os.path.exists(datafile):
@@ -39,15 +39,15 @@ def calculate():
         print ("url is", starturl2)
         page = requests.get(starturl2, headers = headers)
         infodict = get_info(page, search_str)
-        infodict['中文名'] = args[1]
         if infodict is None:
-            print (search_str, "already exist")
-        elif type(infodict) == int :
-            print ("no result, just continue")
+            print ("thread", threading.currentThread().getName(),search_str, "already exist")
+        elif type(infodict) is int :
+            print ("thread", threading.currentThread().getName(), "no result, just continue")
         else:
-            print ("get info of %s"%(infodict['name']), infodict)
+            print ("thread", threading.currentThread().getName(),"get info of %s"%(infodict['name']), infodict)
             infodict['count'] = len(infodict['pictures']) #picture numbers
             print ("get all together %d pictures"%(infodict['count']))
+            infodict['中文名'] = args[1]
             dictionary[infodict['name']] = infodict
         args = get_next()
     print ("thread", threading.currentThread().getName(),"done")
@@ -73,8 +73,9 @@ def get_info(page, search):
 
     tree = fromstring(page.text)
     #just search the first, most proper one
-    xpathstr = "//td/a[./i/text() = \'" + search + "\']/@href"
     try:
+        infodict['valid name'] = tree.xpath("//tr/td[@class='tdN' and @align='left']/a/i/text()")[0].strip()
+        xpathstr = "//td/a[./i/text() = \'" + infodict['valid name'] + "\']/@href"
         detailurl = tree.xpath(xpathstr)[0]
     except IndexError as e:
         print ("index error, means that no result, just return")
@@ -126,13 +127,13 @@ def download(idict):
     for url in idict['pictures']:
         print ("ready to get img ", url, idict['name'])
         post = url.split('/')[-1].replace(" ", "_")
-        count = 0
-        while count < 3:
+        retry = 0
+        while retry < 3:
             try:
                 imginfo = requests.get(url, headers = headers)
             except ConnectionError as e:
                 print ("encounterred connection error, retry...")
-                count -= 1
+                count += 1
             else:
                 break
         print ("success get")
@@ -140,12 +141,12 @@ def download(idict):
             f.write(imginfo.content)
 
 thread_arr = []
-for _ in range(2):
+for _ in range(8):
     t = threading.Thread(target=calculate)
     thread_arr.append(t)
     t.start()
 
-for i in range(2):
+for i in range(8):
     thread_arr[i].join()
 
 print (dictionary)
