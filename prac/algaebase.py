@@ -16,7 +16,7 @@ lock = threading.Lock()
 index = 0
 lst = ['Ascophyllum nodosum', 'Fucus spiralis']
 
-datafile = "/tmp/datafile.dat"
+datafile = "/tmp/algaebase_datafile.dat"
 if os.path.exists(datafile):
     with open(datafile, "rb") as f:
         exist_set = pickle.load(f) # exist set
