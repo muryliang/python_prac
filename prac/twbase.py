@@ -97,7 +97,7 @@ def calculate():
             print ("get all together %d pictures"%(infodict['count']))
             infodict['中文名'] = args[1]
             dictionary[infodict['name']] = infodict
-            exist_set.add(infodict['name'])
+            exist_set.add(infodict['name'].replace(" ", "_"))
         args = get_next()
 
         #temply save in case of accident
