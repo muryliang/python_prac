@@ -1,34 +1,33 @@
 import requests
-import re
-from string import ascii_lowercase
-import threading
-import pickle
-from urllib.parse import urljoin
-from lxml.html import fromstring
-import os
 from requests.exceptions import ConnectionError,ReadTimeout
 from requests.exceptions import ReadTimeout
+from urllib.parse import urljoin
+from lxml.html import fromstring
+import re
+import threading
+import pickle
+import os
+import sys
 import time
-from socket import timeout
 
 starturl = 'http://fishdb.sinica.edu.tw/chi/synonyms_list.php?id=&pz=25&page=0&R1=&key='
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'}
-ddir = "/tmp/fish" # download base dir
+ddir = "/home/jztec/fish" # download base dir
 
-dictionary = dict() # currently do not store any thing
 lock = threading.Lock()
 index = 0
 done = 0 # use this instead of join because join will block, not know why, locked ??
 #lst = ['Anguilla marmorata'] # have no internal pic
+stdoutfiletemplate = "/home/jztec/fish/fishlog"
 
 #get input from csv file
-csvfile = "/tmp/fishsorts.dat"
+csvfile = "/home/jztec/fish/fishsorts.dat"
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
-engname, chiname = fishnames['engname'][:10], fishnames['chiname'][:10]
+engname, chiname = fishnames['engname'][:], fishnames['chiname'][:]
 
 #get already done set from datafile
-datafile = "/tmp/fishexist.dat"
+datafile = "/home/jztec/fish/fishexist.dat"
 if os.path.exists(datafile):
     with open(datafile, "rb") as f:
         exist_set = pickle.load(f) # exist set
@@ -36,16 +35,24 @@ else:
     exist_set = set()
 
 #get no found type's set
-notfoundfile = "/tmp/fishnotfound.dat"
+notfoundfile = "/home/jztec/fish/fishnotfound.dat"
 if os.path.exists(notfoundfile):
     with open(notfoundfile, "rb") as f:
         notfound_set = pickle.load(f)
 else:
     notfound_set = set()
 
+fishmetafile = "/home/jztec/fish/fishmeta.dat"
+if os.path.exists(fishmetafile):
+    with open(fishmetafile, "rb") as f:
+        notfound_set = pickle.load(f)
+else:
+    dictionary = dict() # currently do not store any thing
+
 def calculate():
     global total
     global dictionary
+    global index
     # modify:  这里需要且分传进来的英文中文名，这个中文名比找的要正规
     args = get_next()
     while args is not None:
@@ -66,6 +73,7 @@ def calculate():
             except Exception as e :
                 print ("retry", e)
                 retry += 1
+                time.sleep(1)
                 continue
         else:
             print ("requests error, on ", threading.currentThread().getName())
@@ -84,7 +92,18 @@ def calculate():
             print ("get all together %d pictures"%(infodict['count']))
             infodict['中文名'] = args[1]
             dictionary[infodict['name']] = infodict
+            exist_set.add(infodict['name'])
+	# after crawl this name, save into exist set
         args = get_next()
+
+        #temply save in case of accident
+        if index  == 19:
+            lock.acquire()
+            with open(fishmetafile, "wb") as f:
+                pickle.dump(dictionary, f)
+            lock.release()
+        index = (index + 1) % 20
+
     print ("thread", threading.currentThread().getName(),"done")
     inc_done()
 
@@ -95,7 +114,6 @@ def inc_done():
     lock.release()
 
 def get_next():
-    global index
     lock.acquire()
     if len(engname) != 0:
         next_item = (engname.pop(), chiname.pop())
@@ -110,8 +128,6 @@ def get_info(page, search):
     infodict['name'] = search
     if infodict['name'] in exist_set: #already exists
         return None
-    else:
-        exist_set.add(infodict['name'])
 
     tree = fromstring(page.text)
     #just search the first, most proper one
@@ -119,6 +135,7 @@ def get_info(page, search):
         infodict['valid name'] = tree.xpath("//tr/td[@class='tdN' and @align='left']/a/i/text()")[0].strip()
         xpathstr = "//td/a[./i/text() = \'" + infodict['valid name'] + "\']/@href"
         detailurl = tree.xpath(xpathstr)[0]
+        infodict['fishinfourl'] = detailurl
     except IndexError as e:
         print ("index error, means that no result, just return")
         return -1
@@ -130,13 +147,17 @@ def get_info(page, search):
         partimgurl = detailtree.xpath("//img[@title='照片']/../@href")[0]
         imgurl = urljoin(starturl, partimgurl)
         infodict['pictures'].extend(get_internal_imgs(imgurl))
+        infodict['internalimgurl'] = imgurl
     except IndexError as e:
+        infodict['internalimgurl'] = None
         print ("no internal pictures")
     try:
         fishbaseurl = detailtree.xpath("//img[@title='FishBase']/../@href")[0]
         infodict['pictures'].extend(get_fb_imgs(fishbaseurl))
+        infodict['externalimgurl'] = fishbaseurl
     except IndexError as e:
         print ("no external pictures")
+        infodict['externalimgurl'] = None
     download(infodict)
     return infodict
 
@@ -190,16 +211,56 @@ def download(idict):
             f.write(imginfo.content)
         time.sleep(1)
 
+def daemonize(stdin='/dev/null',stdout= '/dev/null', stderr= 'dev/null'):
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0) #first parent out
+    except OSError as  e:
+        sys.stderr.write("fork #1 failed: (%d) %s\n" %(e.errno, e.strerror))
+        sys.exit(1)
+
+    #从母体环境脱离
+    os.chdir("/")
+    os.umask(0)
+    os.setsid()
+    #执行第二次fork
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0) #second parent out
+    except OSError as  e:
+        sys.stderr.write("fork #2 failed: (%d) %s]n" %(e.errno,e.strerror))
+        sys.exit(1)
+
+#进程已经是守护进程了，重定向标准文件描述符
+    for f in sys.stdout, sys.stderr: f.flush()
+    si = open(stdin, 'rb')
+    so = open(stdout,'ab+')
+    se = open(stderr,'ab+',0)
+    os.dup2(si.fileno(), sys.stdin.fileno())
+    os.dup2(so.fileno(), sys.stdout.fileno())
+    os.dup2(se.fileno(), sys.stderr.fileno())
+
+#set outputfile
+outfile = stdoutfiletemplate + "-" + time.strftime("%Y%m%d-%H%M%S")
+open(outfile, "w").close()
+
+#daemon your process
+daemonize(stdout= outfile, stderr= outfile)
+
+#start thread
 thread_arr = []
-threads = 1
+threads = 3
 for _ in range(threads):
     t = threading.Thread(target=calculate)
     thread_arr.append(t)
     t.start()
 
 try:
-    while index < threads:
-        time.sleep(5)
+    while done < threads:
+        time.sleep(10)
+# join 有一些问题，会block，这里就不join了，利用done计数探测是否结束所有线程
 #    for i in range(8):
 #        thread_arr[i].join()
 finally:
@@ -210,3 +271,6 @@ finally:
     with open(notfoundfile, "wb") as f:
         pickle.dump(notfound_set, f)
         print ("dump over notfound set")
+    with open(fishmetafile, "wb") as f:
+        pickle.dump(dictionary, f)
+        print ("dump over dictionary")
