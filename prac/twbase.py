@@ -9,6 +9,7 @@ import pickle
 import os
 import sys
 import time
+import signal
 
 starturl = 'http://fishdb.sinica.edu.tw/chi/synonyms_list.php?id=&pz=25&page=0&R1=&key='
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'}
@@ -29,8 +30,10 @@ engname, chiname = fishnames['engname'][:], fishnames['chiname'][:]
 #get already done set from datafile
 datafile = "/home/jztec/fish/fishexist.dat"
 if os.path.exists(datafile):
+    print ("read exist")
     with open(datafile, "rb") as f:
         exist_set = pickle.load(f) # exist set
+    print ("exist is", exist_set)
 else:
     exist_set = set()
 
@@ -45,7 +48,7 @@ else:
 fishmetafile = "/home/jztec/fish/fishmeta.dat"
 if os.path.exists(fishmetafile):
     with open(fishmetafile, "rb") as f:
-        notfound_set = pickle.load(f)
+        dictionary = pickle.load(f)
 else:
     dictionary = dict() # currently do not store any thing
 
@@ -58,6 +61,11 @@ def calculate():
     while args is not None:
         print ("start processing",args,"on", threading.currentThread().getName())
         search_str = args[0] # english name
+        if search_str.replace(" ","_") in exist_set: #already exists
+            print ("thread", threading.currentThread().getName(),search_str, "already exist")
+            args = get_next()
+            continue
+
         starturl2 = starturl + "+".join(search_str.split(" "))
         print ("url is", starturl2)
 
@@ -79,11 +87,8 @@ def calculate():
             print ("requests error, on ", threading.currentThread().getName())
             return
 
-        print ("next")
         infodict = get_info(page, search_str)
-        if infodict is None:
-            print ("thread", threading.currentThread().getName(),search_str, "already exist")
-        elif type(infodict) is int :
+        if type(infodict) is int :
             print ("thread", threading.currentThread().getName(), "no result, just continue")
             notfound_set.add(search_str)
         else:
@@ -93,14 +98,12 @@ def calculate():
             infodict['中文名'] = args[1]
             dictionary[infodict['name']] = infodict
             exist_set.add(infodict['name'])
-	# after crawl this name, save into exist set
         args = get_next()
 
         #temply save in case of accident
         if index  == 19:
             lock.acquire()
-            with open(fishmetafile, "wb") as f:
-                pickle.dump(dictionary, f)
+            dump_all()
             lock.release()
         index = (index + 1) % 20
 
@@ -126,8 +129,6 @@ def get_info(page, search):
     #注意还有原始链接有一张图片，有时候没有内部链接的
     infodict = dict()
     infodict['name'] = search
-    if infodict['name'] in exist_set: #already exists
-        return None
 
     tree = fromstring(page.text)
     #just search the first, most proper one
@@ -203,7 +204,7 @@ def download(idict):
                 imginfo = requests.get(url, headers = headers)
             except ConnectionError as e:
                 print ("encounterred connection error, retry...")
-                count += 1
+                retry += 1
             else:
                 break
         print ("success get")
@@ -242,12 +243,39 @@ def daemonize(stdin='/dev/null',stdout= '/dev/null', stderr= 'dev/null'):
     os.dup2(so.fileno(), sys.stdout.fileno())
     os.dup2(se.fileno(), sys.stderr.fileno())
 
+def dump_all():
+    global datafile
+    global notfoundfile
+    global notfound_set
+    global exist_set
+    global fishmetafile
+    global dictionary
+    with open(datafile, "wb") as f:
+        pickle.dump(exist_set, f)
+        print ("dump over exist set")
+    with open(notfoundfile, "wb") as f:
+        pickle.dump(notfound_set, f)
+        print ("dump over notfound set")
+    with open(fishmetafile, "wb") as f:
+        pickle.dump(dictionary, f)
+        print ("dump over dictionary")
+
+def sigdump(signum, frame):
+    lock.acquire()
+    dump_all()
+    lock.release()
+    sys.exit()
+
 #set outputfile
 outfile = stdoutfiletemplate + "-" + time.strftime("%Y%m%d-%H%M%S")
 open(outfile, "w").close()
 
 #daemon your process
 daemonize(stdout= outfile, stderr= outfile)
+
+#set signal function
+signal.signal(signal.SIGTERM, sigdump)
+signal.signal(signal.SIGINT, sigdump)
 
 #start thread
 thread_arr = []
@@ -265,12 +293,4 @@ try:
 #        thread_arr[i].join()
 finally:
     #print (dictionary)
-    with open(datafile, "wb") as f:
-        pickle.dump(exist_set, f)
-        print ("dump over exist set")
-    with open(notfoundfile, "wb") as f:
-        pickle.dump(notfound_set, f)
-        print ("dump over notfound set")
-    with open(fishmetafile, "wb") as f:
-        pickle.dump(dictionary, f)
-        print ("dump over dictionary")
+    dump_all()
