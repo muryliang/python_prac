@@ -65,6 +65,10 @@ def calculate():
             print ("thread", threading.currentThread().getName(),search_str, "already exist")
             args = get_next()
             continue
+        elif search_str in notfound_set:
+            print ("thread", threading.currentThread().getName(),search_str, "previously not found")
+            args = get_next()
+            continue
 
         starturl2 = starturl + "+".join(search_str.split(" "))
         print ("url is", starturl2)
