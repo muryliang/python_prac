@@ -5,8 +5,40 @@ import requests
 import time
 import pickle
 import os
+import sys
 import threading
 import signal
+
+def daemonize(stdin='/dev/null',stdout= '/dev/null', stderr= 'dev/null'):
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0) #first parent out
+    except OSError as  e:
+        sys.stderr.write("fork #1 failed: (%d) %s\n" %(e.errno, e.strerror))
+        sys.exit(1)
+
+    #从母体环境脱离
+    os.chdir("/")
+    os.umask(0)
+    os.setsid()
+    #执行第二次fork
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0) #second parent out
+    except OSError as  e:
+        sys.stderr.write("fork #2 failed: (%d) %s]n" %(e.errno,e.strerror))
+        sys.exit(1)
+
+#进程已经是守护进程了，重定向标准文件描述符
+    for f in sys.stdout, sys.stderr: f.flush()
+    si = open(stdin, 'rb')
+    so = open(stdout,'ab+')
+    se = open(stderr,'ab+',0)
+    os.dup2(si.fileno(), sys.stdin.fileno())
+    os.dup2(so.fileno(), sys.stdout.fileno())
+    os.dup2(se.fileno(), sys.stderr.fileno())
 
 def download_img(inf, ddir):
     global headers
@@ -127,7 +159,7 @@ ddir = "/home/jztec/fishgoogle"
 csvfile = "/home/jztec/fishsorts.dat"
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
-engname = fishnames['engname'][:]
+engname = fishnames['engname'][:3]
 
 #search_str = "Cololabis saira"
 existfile = "/home/jztec/fishgoogle/exist.dat"
@@ -146,6 +178,16 @@ if os.path.exists(dumpfile):
         alldict = pickle.load(f) # exist set
 else:
     alldict = dict()
+
+#daemonize
+#set outputfile
+stdoutfiletemplate = "/home/jztec/fishgoogle/fishlog"
+outfile = stdoutfiletemplate + "-" + time.strftime("%Y%m%d-%H%M%S")
+open(outfile, "w").close()
+
+#daemon your process
+daemonize(stdout= outfile, stderr= outfile)
+
 
 #set signal
 signal.signal(signal.SIGTERM, sigdump)
