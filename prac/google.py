@@ -92,6 +92,7 @@ def calculate():
                     info[index]['imgurl'] = None
                     info[index]['height'] = None
                     info[index]['width'] = None
+
                 print ("got image:", info[index]['imgurl'])
                 if download_img(info[index], os.path.join(ddir, search_str.replace(" ", "_"))):
                     print ("finish page", info[index]['imgsavename'])
@@ -106,17 +107,17 @@ def calculate():
 
 headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'}
 base_url = 'https://www.google.com/search?'
-ddir = "/tmp/gfish"
+ddir = "/home/jztec/fishgoogle"
 #global dictionary, used to be stored and read
 
 #get input from csv file
-csvfile = "/home/jztec/googlefish/fishsorts.dat"
+csvfile = "/home/jztec/fishsorts.dat"
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
 engname = fishnames['engname'][:2]
 
 #search_str = "Cololabis saira"
-existfile = "/home/jztec/googlefish/exist.dat"
+existfile = "/home/jztec/fishgoogle/exist.dat"
 if os.path.exists(existfile):
     print ("read exist")
     with open(datafile, "rb") as f:
@@ -125,7 +126,7 @@ if os.path.exists(existfile):
 else:
     exist_set = set()
 
-dumpfile = "/home/jztec/googlefish/dumpfish.dat"
+dumpfile = "/home/jztec/fishgoogle/dumpfish.dat"
 if os.path.exists(dumpfile):
     print ("read exist")
     with open(dumpfile, "rb") as f:
