@@ -22,6 +22,16 @@ def download_img(inf, ddir):
     print ("download pic done", inf['imgsavename'])
     return True
 
+def dump_all():
+    global exist_set
+    global existfile
+    global alldict
+    global dumpfile
+    with open(dumpfile, "wb") as f:
+        pickle.dump(alldict, f)
+    with open(existfile, "wb") as f:
+        pickle.dump(exist_set, f)
+
 def lock_inc(obj):
     global lock
     lock.acquire()
@@ -98,15 +108,30 @@ headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHT
 base_url = 'https://www.google.com/search?'
 ddir = "/tmp/gfish"
 #global dictionary, used to be stored and read
-alldict = dict()
 
 #get input from csv file
-csvfile = "/home/jztec/fish/fishsorts.dat"
+csvfile = "/home/jztec/googlefish/fishsorts.dat"
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
-engname = fishnames['engname'][:]
+engname = fishnames['engname'][:2]
 
 #search_str = "Cololabis saira"
+existfile = "/home/jztec/googlefish/exist.dat"
+if os.path.exists(existfile):
+    print ("read exist")
+    with open(datafile, "rb") as f:
+        exist_set = pickle.load(f) # exist set
+#    print ("exist is", exist_set)
+else:
+    exist_set = set()
+
+dumpfile = "/home/jztec/googlefish/dumpfish.dat"
+if os.path.exists(dumpfile):
+    print ("read exist")
+    with open(dumpfile, "rb") as f:
+        alldict = pickle.load(f) # exist set
+else:
+    alldict = dict()
 
 #about thread manage
 done = 0
@@ -123,5 +148,4 @@ try:
         time.sleep(10)
     print ("all threads done")
 finally:
-    with open("/tmp/fishgoogle.dat", "wb") as f:
-        pickle.dump(alldict, f)
+    dump_all()
