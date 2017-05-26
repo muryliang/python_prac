@@ -15,9 +15,9 @@ socket.socket = socks.socksocket
 starturl = "https://www.facebook.com"
 googleurl = "https://www.google.com"
 ifconfigme = "http://ifconfig.me/ip"
-imgurl = 'https://www.google.com/search?site=imghp&tbm=isch&source=hp&biw=1280&bih=612&q=ko&oq=ko&gs_l=img.3...25947.29182.0.29483.13.13.0.0.0.0.306.608.3-2.2.0....0...1.1j4.64.img..11.2.604.0..0.eVmz_WCcEGQ'
+imgurl = 'https://www.google.com/search?q=Cololabis+saira&ijn=0&start=0&tbm=isch'
 try:
-    page = requests.get(starturl, headers = headers)
+    page = requests.get(imgurl, headers = headers)
     print (page.text)
 except Exception as e:
     print ("some wrong")
