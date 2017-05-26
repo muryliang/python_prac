@@ -6,6 +6,7 @@ import time
 import pickle
 import os
 import threading
+import signal
 
 def download_img(inf, ddir):
     global headers
@@ -22,20 +23,27 @@ def download_img(inf, ddir):
     print ("download pic done", inf['imgsavename'])
     return True
 
+def sigdump(signum, frame):
+    dump_all()
+
 def dump_all():
     global exist_set
     global existfile
     global alldict
     global dumpfile
+    global lock
+    lock.acquire()
     with open(dumpfile, "wb") as f:
         pickle.dump(alldict, f)
     with open(existfile, "wb") as f:
         pickle.dump(exist_set, f)
+    lock.release()
 
-def lock_inc(obj):
+def lock_inc():
+    global done
     global lock
     lock.acquire()
-    obj += 1
+    done += 1
     lock.release()
 
 def get_next():
@@ -99,11 +107,16 @@ def calculate():
                     index += 1
                 else:
                     print ("skip page", info[index]['imgsavename'])
+                # peirodically backup
+                if index % 300 == 299:
+                    dump_all()
+        lock.acquire()
         alldict[search_str] = info
         exist_set.add(search_str.replace(" ", "_"))
+        lock.release()
         search_str = get_next()
     print (curthread,"thread done")
-    lock_inc(done)
+    lock_inc()
 
 headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'}
 base_url = 'https://www.google.com/search?'
@@ -114,13 +127,13 @@ ddir = "/home/jztec/fishgoogle"
 csvfile = "/home/jztec/fishsorts.dat"
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
-engname = fishnames['engname'][:2]
+engname = fishnames['engname'][:]
 
 #search_str = "Cololabis saira"
 existfile = "/home/jztec/fishgoogle/exist.dat"
 if os.path.exists(existfile):
     print ("read exist")
-    with open(datafile, "rb") as f:
+    with open(existfile, "rb") as f:
         exist_set = pickle.load(f) # exist set
 #    print ("exist is", exist_set)
 else:
@@ -134,11 +147,15 @@ if os.path.exists(dumpfile):
 else:
     alldict = dict()
 
+#set signal
+signal.signal(signal.SIGTERM, sigdump)
+signal.signal(signal.SIGINT, sigdump)
+
 #about thread manage
 done = 0
 lock = threading.Lock()
 thread_arr = []
-threads = 3
+threads = 4
 for _ in range(threads):
     t = threading.Thread(target=calculate)
     thread_arr.append(t)
