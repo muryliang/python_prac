@@ -152,7 +152,7 @@ def calculate():
 
 headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'}
 base_url = 'https://www.google.com/search?'
-dir_prefix = "/home/sora"
+dir_prefix = "/mnt/sdb1/google"
 ddir = os.path.join(dir_prefix, "fishgoogle")
 #global dictionary, used to be stored and read
 
@@ -160,7 +160,7 @@ ddir = os.path.join(dir_prefix, "fishgoogle")
 csvfile = os.path.join(dir_prefix, "fishsorts.dat")
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
-engname = fishnames['engname'][:3]
+engname = fishnames['engname'][:500]
 
 #search_str = "Cololabis saira"
 existfile = os.path.join(dir_prefix, "fishgoogle/exist.dat")
@@ -187,7 +187,7 @@ outfile = stdoutfiletemplate + "-" + time.strftime("%Y%m%d-%H%M%S")
 open(outfile, "w").close()
 
 #daemon your process
-#daemonize(stdout= outfile, stderr= outfile)
+daemonize(stdout= outfile, stderr= outfile)
 
 
 #set signal
