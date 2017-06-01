@@ -45,18 +45,25 @@ def download_img(inf, ddir):
     if not os.path.exists(ddir):
         os.makedirs(ddir)
     filepath = os.path.join(ddir, inf['imgsavename'])
-    try:
-        content = requests.get(inf['imgurl'], headers = headers, timeout = 5)
-    except Exception as e:
-        print ("download failed , just return", inf['imgsavename'])
-        return False
+    retry = 0
+    while retry < 3:
+        try:
+            content = requests.get(inf['imgurl'], headers = headers, timeout = 5)
+            break
+        except Exception as e:
+            print ("download failed , just return", inf['imgsavename'])
+            retry += 1
+            if retry >= 3:
+                return False
     with open(filepath, "wb") as f:
         f.write(content.content)
     print ("download pic done", inf['imgsavename'])
     return True
 
 def sigdump(signum, frame):
+    print ("begin dump")
     dump_all()
+    sys.exit()
 
 def dump_all():
     global exist_set
@@ -96,6 +103,7 @@ def calculate():
     while search_str is not None:
         if search_str.replace(" ", "_") in exist_set:
             print (curthread,"already downloaded", search_str)
+            search_str = get_next()
             continue
         print (curthread, "begin fetching", search_str)
         info = dict() # this for one species
@@ -108,7 +116,19 @@ def calculate():
         #    tbs = 'isz:l' #only big size img, but too little
             params = dict (q=search_str, ijn=i , start=i*100, tbm='isch')
             url = base_url + urlencode(params)
-            page = requests.get(url, headers = headers)
+            retry = 0
+            while retry < 5:
+                try:
+                    page = requests.get(url, headers = headers)
+                    break
+                except Exception as e:
+                    print ("request get error, retry...")
+                    retry += 1
+                    time.sleep(2)
+            if retry >= 5:
+                print ("current url failed", url)
+                continue
+                        
             soup = BeautifulSoup(page.text, 'lxml')
             image_divs = soup.find_all('div', class_='rg_meta')
             # handle 100 imgs
@@ -152,7 +172,7 @@ def calculate():
 
 headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'}
 base_url = 'https://www.google.com/search?'
-dir_prefix = "/home/sora"
+dir_prefix = "/mnt/sdb1/google"
 ddir = os.path.join(dir_prefix, "fishgoogle")
 #global dictionary, used to be stored and read
 
@@ -160,7 +180,7 @@ ddir = os.path.join(dir_prefix, "fishgoogle")
 csvfile = os.path.join(dir_prefix, "fishsorts.dat")
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
-engname = fishnames['engname'][:3]
+engname = fishnames['engname'][500:1000]
 
 #search_str = "Cololabis saira"
 existfile = os.path.join(dir_prefix, "fishgoogle/exist.dat")
@@ -187,7 +207,7 @@ outfile = stdoutfiletemplate + "-" + time.strftime("%Y%m%d-%H%M%S")
 open(outfile, "w").close()
 
 #daemon your process
-#daemonize(stdout= outfile, stderr= outfile)
+daemonize(stdout= outfile, stderr= outfile)
 
 
 #set signal
