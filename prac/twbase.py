@@ -13,22 +13,22 @@ import signal
 
 starturl = 'http://fishdb.sinica.edu.tw/chi/synonyms_list.php?id=&pz=25&page=0&R1=&key='
 headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'}
-ddir = "/home/jztec/fish" # download base dir
+ddir = "/home/jztec/fish2" # download base dir
 
 lock = threading.Lock()
 index = 0
 done = 0 # use this instead of join because join will block, not know why, locked ??
 #lst = ['Anguilla marmorata'] # have no internal pic
-stdoutfiletemplate = "/home/jztec/fish/fishlog"
+stdoutfiletemplate = os.path.join(ddir, "fishlog")
 
 #get input from csv file
-csvfile = "/home/jztec/fish/fishsorts.dat"
+csvfile = os.path.join(ddir,"fishsorts.dat")
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
 engname, chiname = fishnames['engname'][:], fishnames['chiname'][:]
 
 #get already done set from datafile
-datafile = "/home/jztec/fish/fishexist.dat"
+datafile = os.path.join(ddir, "fishexist.dat")
 if os.path.exists(datafile):
     print ("read exist")
     with open(datafile, "rb") as f:
@@ -38,14 +38,14 @@ else:
     exist_set = set()
 
 #get no found type's set
-notfoundfile = "/home/jztec/fish/fishnotfound.dat"
+notfoundfile = os.path.join(ddir, "fishnotfound.dat")
 if os.path.exists(notfoundfile):
     with open(notfoundfile, "rb") as f:
         notfound_set = pickle.load(f)
 else:
     notfound_set = set()
 
-fishmetafile = "/home/jztec/fish/fishmeta.dat"
+fishmetafile = os.path.join(ddir, "fishmeta.dat")
 if os.path.exists(fishmetafile):
     with open(fishmetafile, "rb") as f:
         dictionary = pickle.load(f)
@@ -99,7 +99,7 @@ def calculate():
             print ("thread", threading.currentThread().getName(),"get info of %s"%(infodict['name']), infodict)
             infodict['count'] = len(infodict['pictures']) #picture numbers
             print ("get all together %d pictures"%(infodict['count']))
-            infodict['中文名'] = args[1]
+#            infodict['中文名'] = args[1]
             dictionary[infodict['name']] = infodict
             exist_set.add(infodict['name'].replace(" ", "_"))
         args = get_next()
@@ -283,7 +283,7 @@ signal.signal(signal.SIGINT, sigdump)
 
 #start thread
 thread_arr = []
-threads = 3
+threads = 6
 for _ in range(threads):
     t = threading.Thread(target=calculate)
     thread_arr.append(t)

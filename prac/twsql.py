@@ -33,11 +33,12 @@ def create_twtable_if_needed(cursor, table):
         ret = cursor.execute("create table {0} (id int not null auto_increment, \
                             engname varchar(50) not null, chiname varchar(50) not null, \
                             scientific_name varchar(50) not null, objurl varchar(255) not null, \
-                            image mediumblob, primary key(id)) charset=utf8 ;".format(table))
+                            imgsavename varchar(255) not null, \
+                            primary key(id)) charset=utf8 ;".format(table))
 
 
 def record_info(conn, cur, table):
-    insert_str = "insert into {0} (engname, chiname, scientific_name, objurl, image) \
+    insert_str = "insert into {0} (engname, chiname, scientific_name, objurl, imgsavename) \
             values (%s,%s,%s,%s,%s);"
     basedir = "/home/jztec/fish"
     meta = load_from_pickle("/home/jztec/fish/fishmeta.dat")
@@ -49,12 +50,13 @@ def record_info(conn, cur, table):
             if pic in urllist:
                 print ("url %s already inserted, skip" %(pic))
                 continue
-            picpath = os.path.join(curbasedir, pic.split("/")[-1].replace(" ","_").replace("gif", "jpg"))
+            savename = pic.split("/")[-1].replace(" ","_").replace("gif", "jpg")
+            picpath = os.path.join(curbasedir, savename)
             if os.path.exists(picpath):
-                with open(picpath, "rb") as f:
-                    imgdata = f.read()
+#                with open(picpath, "rb") as f:
+#                    imgdata = f.read()
                 #中文名可能是float('nan'),一般是字符串，所以强制转换
-                cur.execute(insert_str.format(table), (meta[key]['name'], str(meta[key]['中文名']), meta[key]['valid name'], pic, imgdata))
+                cur.execute(insert_str.format(table), (meta[key]['name'], str(meta[key]['中文名']), meta[key]['valid name'], pic, savename))
         conn.commit()
 #        print ("only do one test")
 #        break
