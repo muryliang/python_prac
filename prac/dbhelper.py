@@ -62,7 +62,7 @@ def create_twtable_if_needed(cursor, table):
         ret = cursor.execute( "CREATE TABLE `{0}` ( \
             `picid` bigint(20) NOT NULL AUTO_INCREMENT, \
             `Spidername` varchar(64) DEFAULT NULL, \
-            `fromURL` varchar(512) DEFAULT NULL, \
+            `fromURL` varchar(2048) DEFAULT NULL, \
             `objURL` varchar(2048) DEFAULT NULL, \
             `saveURL` varchar(512) DEFAULT NULL, \
             `width` int(11) DEFAULT NULL, \

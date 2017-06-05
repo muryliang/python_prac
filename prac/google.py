@@ -169,7 +169,7 @@ def calculate():
                     lock.release()
                     exist_set.add(info['imgurl'])
                     print (curthread, "finish store into database...")
-                except Exception as e:
+                except ProgrammingError as e:
                     lock.release()
                     conn.commit()
                     cur.close()
