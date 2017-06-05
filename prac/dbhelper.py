@@ -63,7 +63,7 @@ def create_twtable_if_needed(cursor, table):
             `picid` bigint(20) NOT NULL AUTO_INCREMENT, \
             `Spidername` varchar(64) DEFAULT NULL, \
             `fromURL` varchar(512) DEFAULT NULL, \
-            `objURL` varchar(512) DEFAULT NULL, \
+            `objURL` varchar(2048) DEFAULT NULL, \
             `saveURL` varchar(512) DEFAULT NULL, \
             `width` int(11) DEFAULT NULL, \
             `height` int(11) DEFAULT NULL, \
@@ -80,25 +80,18 @@ def create_twtable_if_needed(cursor, table):
 def insert_info_one(conn, cur, table, record, basedir):
     insert_str = "insert into {0} (Spidername, fromURL, objURL, saveURL, width, height, size, type, name, keyword, \
             classification, info, gettime) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,UNIX_TIMESTAMP());"
-    key = record[0]['name']
+    key = record['name']
     print ("begin store ", key)
     curbasedir = os.path.join(basedir, key.replace(" ", "_"))
-    print ("we have %d pictures for %s"%(len(record), key))
     args = list()
-    starttime = time.time()
-    for pic in record:
-        info = record[pic]
-        picpath = os.path.join(curbasedir, info['imgsavename'])
-        if os.path.exists(picpath):
-            args.append(("googlespider",info['fromUrl'],info['imgurl'],info['imgsavename'],info['width'],info['height'],
-                "0", "jpg", info['imgsavename'], info['name'], "", str(info['desc'])))
-#                cur.execute(insert_str.format(table), (info['name'], info['height'], info['width'],
-#                            info['imgsavename'], info['fromUrl'], info['imgurl'], imgdata))
-    cur.executemany(insert_str.format(table), args)
+    info = record
+    picpath = os.path.join(curbasedir, info['imgsavename'])
+    if os.path.exists(picpath):
+        param = (("googlespider",info['fromUrl'],info['imgurl'],info['imgsavename'],info['width'],info['height'],
+            "0", "jpg", info['imgsavename'], info['name'], "", str(info['desc'])))
+        cur.execute(insert_str.format(table), param)
+#    cur.executemany(insert_str.format(table), args)
     conn.commit()
-    endtime = time.time()
-    print ("cost time:",endtime - starttime)
-    print ("done recoding")
 
 
 def load_exist(cur, search, table):
