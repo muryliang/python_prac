@@ -8,6 +8,7 @@ import os
 import sys
 import threading
 import signal
+import dbhelper as db
 
 def daemonize(stdin='/dev/null',stdout= '/dev/null', stderr= 'dev/null'):
     try:
@@ -62,21 +63,8 @@ def download_img(inf, ddir):
 
 def sigdump(signum, frame):
     print ("begin dump")
-    dump_all()
+#    dump_all()
     sys.exit()
-
-def dump_all():
-    global exist_set
-    global existfile
-    global alldict
-    global dumpfile
-    global lock
-    lock.acquire()
-    with open(dumpfile, "wb") as f:
-        pickle.dump(alldict, f)
-    with open(existfile, "wb") as f:
-        pickle.dump(exist_set, f)
-    lock.release()
 
 def lock_inc():
     global done
@@ -98,17 +86,30 @@ def get_next():
 
 def calculate():
     global ddir
-    search_str = get_next()
+    global host
+    global user, passwd, dbname, table
+
+    # connect database and create table if needed
+    lock.acquire()
+    conn, cur = db.get_or_create_db(host, user, passwd, dbname)
+    db.create_twtable_if_needed(cur, table)
+    lock.release()
+
+    #begin fetch
     curthread = threading.currentThread().getName()
+    search_str = get_next()
     while search_str is not None:
-        if search_str.replace(" ", "_") in exist_set:
-            print (curthread,"already downloaded", search_str)
-            search_str = get_next()
-            continue
         print (curthread, "begin fetching", search_str)
         info = dict() # this for one species
-        index = 0
+
+        #load exist data from database
+        index_set, exist_set = db.load_exist(cur, search_str, table)
+        index = max([int(x.split(".")[0]) for x in index_set], default = -1) + 1
+        print ("now start from index ", index)
+
         #test shows that  only can fetch less than 10 pages, otherwise return no content, so 12 is enough
+        # here we first get all 12 pages' information, then store info database together, may not be proper,
+        # will fix later, insert every record after downloaded, better?
         for i in range(0,12):
             print ("start loop", i)
             time.sleep(1)
@@ -153,61 +154,58 @@ def calculate():
                     info[index]['height'] = None
                     info[index]['width'] = None
 
+                if info[index]['imgurl'] in exist_set or info[index]['imgurl'] is None:
+                    print ("img %s of %s exists, skip"%(search_str, info[index]['imgurl']))
+                    continue
                 print ("got image:", info[index]['imgurl'])
                 if download_img(info[index], os.path.join(ddir, search_str.replace(" ", "_"))):
                     print ("finish page", info[index]['imgsavename'])
                     index += 1
                 else:
                     print ("skip page", info[index]['imgsavename'])
-                # peirodically backup
-                if index % 300 == 299:
-                    dump_all()
-        lock.acquire()
-        alldict[search_str] = info
-        exist_set.add(search_str.replace(" ", "_"))
-        lock.release()
+        #store into db when every species is downloaded
+        try:
+            print (curthread, "begin store into database...")
+            lock.acquire()
+            db.insert_info_one(conn, cur, table, info, ddir)
+            lock.release()
+            print (curthread, "finish store into database...")
+        except Exception as e:
+            lock.release()
+            conn.commit()
+            cur.close()
+            conn.close()
+            print (e, "exception happened in ",curthread)
         search_str = get_next()
     print (curthread,"thread done")
     lock_inc()
 
 headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.100 Safari/537.36'}
 base_url = 'https://www.google.com/search?'
-dir_prefix = "/mnt/sdb1/google"
+dir_prefix = "/mnt/sdb1/fullgoogle"
 ddir = os.path.join(dir_prefix, "fishgoogle")
-#global dictionary, used to be stored and read
+host = "127.0.0.1"
+user = "root"
+passwd = "123456"
+table = "secondgoogletable"
+dbname = "fishdb"
 
 #get input from csv file
-csvfile = os.path.join(dir_prefix, "fishsorts.dat")
+csvfile = os.path.join(dir_prefix, "fishsort2.dat")
 with open(csvfile, "rb") as f:
     fishnames = pickle.load(f)
-engname = fishnames['engname'][500:1000]
-
-#search_str = "Cololabis saira"
-existfile = os.path.join(dir_prefix, "fishgoogle/exist.dat")
-if os.path.exists(existfile):
-    print ("read exist")
-    with open(existfile, "rb") as f:
-        exist_set = pickle.load(f) # exist set
-#    print ("exist is", exist_set)
-else:
-    exist_set = set()
-
-dumpfile = os.path.join(dir_prefix, "fishgoogle/dumpfish.dat")
-if os.path.exists(dumpfile):
-    print ("read exist")
-    with open(dumpfile, "rb") as f:
-        alldict = pickle.load(f) # exist set
-else:
-    alldict = dict()
+engname = fishnames['engname'][:]
 
 #daemonize
 #set outputfile
 stdoutfiletemplate = os.path.join(dir_prefix, "fishgoogle/fishlog")
+if not os.path.exists(stdoutfiletemplate):
+    os.makedirs(stdoutfiletemplate)
 outfile = stdoutfiletemplate + "-" + time.strftime("%Y%m%d-%H%M%S")
 open(outfile, "w").close()
 
 #daemon your process
-daemonize(stdout= outfile, stderr= outfile)
+#daemonize(stdout= outfile, stderr= outfile)
 
 
 #set signal
@@ -224,9 +222,6 @@ for _ in range(threads):
     thread_arr.append(t)
     t.start()
 
-try:
-    while done < threads:
-        time.sleep(10)
-    print ("all threads done")
-finally:
-    dump_all()
+while done < threads:
+    time.sleep(10)
+print ("all threads done")
