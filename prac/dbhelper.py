@@ -93,12 +93,48 @@ def insert_info_one(conn, cur, table, record, basedir):
 #    cur.executemany(insert_str.format(table), args)
     conn.commit()
 
+def load_all(cur, field, table):
+    select_str = "select {0} from {1};"
+    ret = cur.execute(select_str.format(field, table))
+    res = cur.fetchall()
+    return set(x[0] for x in res)
 
 def load_exist(cur, search, table):
     select_str = "select saveURL, objURL from {0} where keyword = %s"
     ret = cur.execute(select_str.format(table), (search,))
     res = cur.fetchall()
     return set(x[0] for x in res), set(x[1] for x in res)
+
+def daemonize(stdin='/dev/null',stdout= '/dev/null', stderr= 'dev/null'):
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0) #first parent out
+    except OSError as  e:
+        sys.stderr.write("fork #1 failed: (%d) %s\n" %(e.errno, e.strerror))
+        sys.exit(1)
+
+    #从母体环境脱离
+    os.chdir("/")
+    os.umask(0)
+    os.setsid()
+    #执行第二次fork
+    try:
+        pid = os.fork()
+        if pid > 0:
+            sys.exit(0) #second parent out
+    except OSError as  e:
+        sys.stderr.write("fork #2 failed: (%d) %s]n" %(e.errno,e.strerror))
+        sys.exit(1)
+
+#进程已经是守护进程了，重定向标准文件描述符
+    for f in sys.stdout, sys.stderr: f.flush()
+    si = open(stdin, 'rb')
+    so = open(stdout,'ab+')
+    se = open(stderr,'ab+',0)
+    os.dup2(si.fileno(), sys.stdin.fileno())
+    os.dup2(so.fileno(), sys.stdout.fileno())
+    os.dup2(se.fileno(), sys.stderr.fileno())
 
 if __name__ == "__main__":
     user = "root"

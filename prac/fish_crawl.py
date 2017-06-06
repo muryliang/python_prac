@@ -7,79 +7,116 @@ import time
 import string
 import os
 import pickle
+import dbhelper as db
+from requests.packages.urllib3.exceptions import ConnectTimeoutError
 
-clist = dict()
 total_count = 0
-storepath = "/home/sora/git/python/prac/setstore.dat"
-if os.path.exists(storepath):
-    with open(storepath, "rb") as f:
-        cset = pickle.load(f)
-else:
-    cset = set()
+basedir = "/mnt/sdb1/fishsea"
+
+host = "127.0.0.1"
+user = "root"
+passwd = "123456"
+dbname = "fishdb"
+table = "fishtable"
+
+conn, cur = db.get_or_create_db(host = host, user = user, passwd = passwd, db = dbname)
+db.create_twtable_if_needed(cur, table)
 
 headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', 'Accept-Encoding':'gzip, deflate', 'Accept-Language':'en-US,en;q=0.5', 'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'}
 
+nset = db.load_all(cur, "keyword", table)
+print ("nset is ", nset)
 try:
     for pattern in string.ascii_lowercase:
         start_url = 'http://site1.zjou.edu.cn/fish/fish_1.asp?px=id&PageNo=1&typer=yw&key='+pattern+'&liker=0&page=5000&order=ASC'
         print ("start searching pattern", pattern)
         count = 0
-        start_page = requests.get(start_url, headers = headers)
+        time.sleep(3)
+        try:
+            start_page = requests.get(start_url, headers = headers, timeout=100)
+        except Exception as e:
+            print ("can not fetch pattern %s, continue"%(pattern))
+            continue
         start_page.encoding = 'gbk'
         tree = fromstring(start_page.text)
         nameurls = tree.xpath("//span[@class='style5']/a/@onclick")
         names = tree.xpath("//span[@class='style5']/a/text()")
-        #学名这个有漏的，不能这样匹配，会移位，只能在里面找
-        #scinames = tree.xpath("//span[@class='style5']/i/text()")
 #        print (len(names), len(nameurls))
         for name, nameurl in zip(names, nameurls):
-            if nameurl in cset:
+            if name in nset:
+                print ("%s already downloaded, skip"%(name,))
                 continue
-            cset.add(nameurl)
             parturl = re.match("MM_openBrWindow\('(fish[^']*).*", nameurl).group(1) 
             wholeurl = urljoin(start_url, parturl)
-            infopage = requests.get(wholeurl, headers = headers)
+            retry = 3
+            while retry > 0:
+                try:
+                    infopage = requests.get(wholeurl, headers = headers, timeout = 5)
+                    break
+                except ConnectTimeoutError as e:
+                    retry -= 1
+                    print (name, "retry", retry)
+                    time.sleep(3)
+                except Exception as e:
+                    retry = 0
+                    print ("just continue")
+            else:
+                print ("get info connect error, just continue")
+                continue
+
             # 网页的charset里是gb2312，但是实际使用发现gbk才能保证没有乱码字符,gb2312偶尔会乱码某些字符，如"鱚"不行
             infopage.encoding = 'gbk'
             infoobj = BeautifulSoup(infopage.text, 'html.parser')
             tbl = infoobj.body.table.findAll("tr")[1].td.findAll("tr") 
             imgs = tbl[5]
             tbl = tbl[:5]
-            clist[name] = dict()
-            print ("processing:", tbl[0].td.font.b.contents)
-            clist[name]['中文名'] = name
-            sciname = tree.xpath("//span[@class='style5']/i[../a/text()=\'"+name+"\']/text()")
-            print ("sciname is", sciname)
-            if len(sciname) == 0:
-                clist[name]['学名'] = tbl[0].td.font.b.em.get_text()
-            else :
-                clist[name]['学名'] = sciname[0]
-        # 不同物种里的结构不一样，有些不能用contents分，需要正则结合之前的学名来获取，价值不大，先不弄
-        #    clist[name]['recorder'] = "".join([str(k).strip('</em>') for k in tbl[0].td.font.b.contents[2:]])
-
-            for i in range(1,4):
-                clist[name][tbl[i].findAll("td")[0].get_text().strip().replace('\xa0','')] = \
-                    tbl[i].findAll("td")[1].get_text().strip().replace('\xa0','')
-            print ("after processing:", clist[name])
-
-            clist[name]['描述'] = tbl[4].findAll("td")[0].get_text().strip().replace('\xa0','')
 
             for imgsrc in imgs.findAll("img"):
                 imgurl = urljoin(start_url, imgsrc['src'])
                 postfix = imgurl.split('/')[-1]
-                imgcontent = requests.get(imgurl, headers= headers)
-                clist[name][postfix] = imgcontent.content
-                filename = os.path.join("/tmp/pic", postfix)
-                with open(filename, "wb+") as f:
+                retry = 3
+                while retry > 0:
+                    try:
+                        imgcontent = requests.get(imgurl, headers = headers, timeout = 5)
+                        break
+                    except ConnectTimeoutError as e:
+                        retry -= 1
+                        print (name, "retry", retry)
+                        time.sleep(3)
+                    except Exception as e:
+                        retry = 0
+                        print ("just continue")
+                else:
+                    print ("connect error, just continue")
+                    continue
+                storedir = os.path.join(basedir, name)
+                filename = os.path.join(storedir, postfix)
+                if not os.path.exists(storedir):
+                    os.makedirs(storedir)
+                with open(filename, "wb") as f:
                     f.write(imgcontent.content)
-            print ("finish count", count, "pattern", pattern, "collected", name, clist[name].keys())
+                info = dict()
+                info['Spidername'] = 'fishspider'
+                info['fromUrl'] = wholeurl
+                info['imgurl'] = imgurl
+                info['imgsavename'] = filename.split('/')[-1]
+                info['width'] = 250
+                info['height'] = 250
+                info['size'] = 250
+                info['type'] = postfix.split('.')[-1]
+                info['desc'] = ""
+                info['name'] = name
+                db.insert_info_one(conn, cur, table, info, basedir)
+            print ("finish count", count, "pattern", pattern, "collected", name)
+            nset.add(name)
             count = count + 1
             total_count = total_count + 1
-            time.sleep(0.1)
+            time.sleep(0.5)
     print ("count is", count)
 except Exception as e:
     print ("some error", e)
 finally:
-    with open(storepath, "wb")  as f:
-        pickle.dump(cset, f)
+    conn.commit()
+    cur.close()
+    conn.close()
     print ("total count is", total_count)
