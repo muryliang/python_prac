@@ -109,3 +109,25 @@ A coding exception was thrown and uncaught in a Task.
 Full message: TypeError: NetworkError when attempting to fetch resource.
 Full stack: 
 *************************
+1496999239930	geckodriver	INFO	Listening on 127.0.0.1:52875
+1496999240230	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496999244418	Marionette	INFO	Listening on port 46197
+1496999244537	Marionette	WARN	TLS certificate errors will be ignored for this session
+1496999334132	geckodriver	INFO	Listening on 127.0.0.1:60365
+1496999335205	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496999338827	Marionette	INFO	Listening on port 41691
+1496999339009	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 11939] WARNING: pipe error (17): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+[Child 11939] WARNING: pipe error (3): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+1496999429992	geckodriver	INFO	Listening on 127.0.0.1:53227
+1496999431067	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496999434664	Marionette	INFO	Listening on port 45267
+1496999434777	Marionette	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 12148] WARNING: pipe error (3): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+1496999505342	geckodriver	INFO	Listening on 127.0.0.1:47883
+1496999506392	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496999510221	Marionette	INFO	Listening on port 32899
+1496999510343	Marionette	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 12329] WARNING: pipe error (3): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
