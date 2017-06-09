@@ -1,0 +1,111 @@
+1496988486767	geckodriver	INFO	Listening on 127.0.0.1:49145
+1496988487852	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496988490899	Marionette	INFO	Listening on port 41591
+1496988491002	Marionette	WARN	TLS certificate errors will be ignored for this session
+1496988576838	geckodriver	INFO	Listening on 127.0.0.1:59041
+1496988577914	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496988581533	Marionette	INFO	Listening on port 42179
+1496988581626	Marionette	WARN	TLS certificate errors will be ignored for this session
+1496989218648	geckodriver	INFO	Listening on 127.0.0.1:36859
+1496989219715	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496989222821	Marionette	INFO	Listening on port 35241
+1496989222905	Marionette	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 3812] WARNING: pipe error (3): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+1496989363186	geckodriver	INFO	Listening on 127.0.0.1:41707
+1496989364238	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496989367353	Marionette	INFO	Listening on port 38927
+1496989367423	Marionette	WARN	TLS certificate errors will be ignored for this session
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:3993): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1496990022061	geckodriver	INFO	Listening on 127.0.0.1:60201
+1496990023153	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496990026316	Marionette	INFO	Listening on port 43773
+1496990026419	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 4841] WARNING: pipe error (17): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x880008,name=PLayerTransaction::Msg_ReleaseCompositable) Channel error: cannot send/recv
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x880007,name=PLayerTransaction::Msg_ReleaseLayer) Channel error: cannot send/recv
+
+
+###!!! [Child][RunMessage] Error: Channel error: cannot send/recv
+
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 4841] WARNING: pipe error (3): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+1496990061445	geckodriver	INFO	Listening on 127.0.0.1:57549
+1496990062522	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496990065937	Marionette	INFO	Listening on port 37207
+1496990066063	Marionette	WARN	TLS certificate errors will be ignored for this session
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+
+(firefox:4928): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:4928): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:4928): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:4928): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:4928): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+
+(firefox:4928): Gtk-CRITICAL **: gtk_window_resize: assertion 'height > 0' failed
+1496997146900	geckodriver	INFO	Listening on 127.0.0.1:43863
+1496997147974	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496997151059	Marionette	INFO	Listening on port 34003
+1496997151147	Marionette	WARN	TLS certificate errors will be ignored for this session
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
+1496997989445	geckodriver	INFO	Listening on 127.0.0.1:44971
+1496997990498	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496997994320	Marionette	INFO	Listening on port 41431
+1496997994435	Marionette	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: Receive IPC close with reason=AbnormalShutdown
+[Child 10413] WARNING: pipe error (3): Connection reset by peer: file /build/firefox/src/mozilla-unified/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 346
+1496998120761	geckodriver	INFO	Listening on 127.0.0.1:32975
+1496998121813	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1496998125485	Marionette	INFO	Listening on port 42705
+1496998125669	Marionette	WARN	TLS certificate errors will be ignored for this session
+*************************
+A coding exception was thrown and uncaught in a Task.
+
+Full message: TypeError: NetworkError when attempting to fetch resource.
+Full stack: 
+*************************
