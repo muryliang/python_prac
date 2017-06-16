@@ -1,0 +1,13 @@
+setup.py
+fishimg/__init__.py
+fishimg/items.py
+fishimg/middlewares.py
+fishimg/pipelines.py
+fishimg/settings.py
+fishimg/spiders/__init__.py
+fishimg/spiders/fishimg.py
+project.egg-info/PKG-INFO
+project.egg-info/SOURCES.txt
+project.egg-info/dependency_links.txt
+project.egg-info/entry_points.txt
+project.egg-info/top_level.txt
