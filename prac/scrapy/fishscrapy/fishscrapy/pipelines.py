@@ -21,21 +21,24 @@ class MyImagePipeline(ImagesPipeline):
         self.basedir = settings['IMAGES_STORE']
 
     def get_media_requests(self, item, info):
-        self.typename = item['keyword']
-        return [Request(x) for x in [item[self.images_urls_field],]]
+#        self.type_name = item['keyword']
+        return [Request(x, meta={'itemtype':item['keyword']}) for x in [item[self.images_urls_field],]]
 
     def item_completed(self, results, item, info):
-        file_paths = [x['path'] for ok, x in results if ok]
-        if not file_paths:
+        image_path_list = [x['path'] for ok, x in results if ok]
+        print ("filepaths are ",image_path_list, "and length",len(image_path_list))
+        print ("but url path is ", item['objURL'])
+        if not image_path_list:
             raise DropItem("Item contains no images")
-        item['saveURL'] = file_paths[0]
+        item['saveURL'] = image_path_list[0]
         return item;
 
     def file_path(self, request, response=None, info=None):
         postfix = request.url.split("/")[-1]
-        typepath = self.typename.strip().replace(" ","_")
+        typepath = request.meta['itemtype'].strip().replace(" ","_")
         hashurl = super().file_path(request, response, info)
         filepath = os.path.join(typepath, hashurl.split("/")[-1])
+        print ("during file_path, type name is", request.meta['itemtype'])
         return filepath
 
 class StoreMetaPipeline(object):

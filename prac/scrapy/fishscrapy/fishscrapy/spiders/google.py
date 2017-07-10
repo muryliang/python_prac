@@ -7,37 +7,47 @@ import socket
 import os
 import re
 import urllib
+import json
+from lxml.html import fromstring
 
-#class BaiduSpider(scrapy.Spider):
-class BaiduSpider(RedisSpider):
+class GoogleSpider(RedisSpider):
     count = 0
-    name = "baidu"
+    name = "google"
     Spidername = name
-    redis_key = 'baidufish'
-    base_url = 'http://image.baidu.com/search/avatarjson?tn=resultjsonavatarnew&ie=utf-8&word={0}&cg=girl&pn={1}&rn=60&itg=0&z=0&fr=&width=&height=&lm=-1&ic=0&s=0&st=-1&gsm=1e0000001e'
+    redis_key = 'googlefish'
 
     def parse(self, response):
  #       fishtype = response.meta['type']
-        fishtype = re.match('.*word=(.*)&cg.*', urllib.parse.unquote(response.url)).group(1)
-        imgdict = json.loads(response.text)['imgs']
-        for imgmeta in imgdict:
+        fishtype = re.match('.*q=(.*)&ijn.*', urllib.parse.unquote(response.url)).group(1).replace("+"," ")
+        tree = fromstring(response.text)
+        imgmetas = tree.xpath("//div[contains(@class, 'rg_meta')]")
+        for imgmeta in imgmetas:
+            meta = json.loads(imgmeta.text)
             item = FishItem()
             item['Spidername'] = self.Spidername
             item['Spiderinfo'] = self.getSpiderinfo()
-            item['fromURL'] = imgmeta['fromURL']
+            item['fromURL'] = meta.get('ru', "none")
 #            item['thumbURL'] = imgmeta['thumbURL']
             item['thumbURL'] = "none"  #这个是本地的
-            item['fromURL'] = imgmeta['fromURL']
-            item['objURL'] = imgmeta['objURL']
+            if 'ou' in meta:
+                item['objURL'] = meta['ou']
+                item['height'] = meta['oh']
+                item['width'] = meta['ow']
+            elif 'tu' in meta:
+                item['objURL'] = meta['tu']
+                item['height'] = meta['th']
+                item['width'] = meta['tw']
+            else:
+                item['objURL'] = None
+                item['height'] = None
+                item['width'] = None
             item['saveURL'] = "none"
-            item['width'] = imgmeta['width']
-            item['height'] = imgmeta['height']
-            item['type'] = imgmeta['type']
+            item['type'] = meta.get('ity','none')
             item['size'] = "none"
-            item['name'] = imgmeta['objURL'].split('/')[-1]
+            item['name'] = meta['objURL'].split('/')[-1]
             item['keyword'] = fishtype
             item['classification'] = fishtype
-            item['info'] = "currently none"
+            item['info'] = meta.get('pt', 'none')
             item['count'] = self.count
             self.count += 1
             yield item

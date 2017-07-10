@@ -1,24 +1,29 @@
-from scrapy_redis.spiders import RedisSpider
 from fishscrapy.items import FishItem;
 import scrapy
 import json
 import pickle
 import socket
 import os
-import re
-import urllib
 
-#class BaiduSpider(scrapy.Spider):
-class BaiduSpider(RedisSpider):
-    count = 0
-    name = "baidu"
+class Baidu2Spider(scrapy.Spider):
+#class BaiduSpider(RedisSpider):
+    name = "baidubak"
     Spidername = name
-    redis_key = 'baidufish'
     base_url = 'http://image.baidu.com/search/avatarjson?tn=resultjsonavatarnew&ie=utf-8&word={0}&cg=girl&pn={1}&rn=60&itg=0&z=0&fr=&width=&height=&lm=-1&ic=0&s=0&st=-1&gsm=1e0000001e'
 
-    def parse(self, response):
- #       fishtype = response.meta['type']
-        fishtype = re.match('.*word=(.*)&cg.*', urllib.parse.unquote(response.url)).group(1)
+    def start_requests(self):
+        self.load_name();
+        self.engname = ['飞机', '大炮', '火箭', '盟军', '爱尔兰']
+        for name in self.engname[:10]:
+            for i in range(10):
+                jsonurl = self.base_url.format(name, str(i))
+                request = scrapy.Request(url = jsonurl, callback=self.jsonparse)
+                request.meta['type'] = name #pass type info
+                yield request
+
+
+    def jsonparse(self, response):
+        fishtype = response.meta['type']
         imgdict = json.loads(response.text)['imgs']
         for imgmeta in imgdict:
             item = FishItem()
@@ -38,8 +43,6 @@ class BaiduSpider(RedisSpider):
             item['keyword'] = fishtype
             item['classification'] = fishtype
             item['info'] = "currently none"
-            item['count'] = self.count
-            self.count += 1
             yield item
 
     def load_name(self):

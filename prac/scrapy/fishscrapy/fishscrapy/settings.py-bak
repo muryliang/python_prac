@@ -68,9 +68,9 @@ DEFAULT_REQUEST_HEADERS = {
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 # Store scraped item in redis for post-processing.
 ITEM_PIPELINES = {
-    'fishscrapy.pipelines.MyImagePipeline':200,
-    'fishscrapy.pipelines.StoreMetaPipeline': 300,
-    'scrapy_redis.pipelines.RedisPipeline': 400,
+    'scrapy_redis.pipelines.RedisPipeline': 300,
+    'fishscrapy.pipelines.MyImagePipeline':400,
+    'fishscrapy.pipelines.StoreMetaPipeline': 500,
 }
 
 IMAGES_STORE = '/tmp/imagefile';
