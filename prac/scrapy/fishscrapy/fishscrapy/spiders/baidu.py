@@ -46,7 +46,7 @@ class BaiduSpider(scrapy.Spider):
         csvfile = "/home/sora/fishsorts.dat"
         with open(csvfile, "rb") as f:
             fishnames = pickle.load(f)
-            self.engname = fishnames['engname']
+            self.engname = fishnames['chiname']
 
     def getSpiderinfo(self):
         try:
