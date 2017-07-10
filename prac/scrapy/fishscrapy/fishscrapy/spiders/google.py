@@ -38,13 +38,13 @@ class GoogleSpider(RedisSpider):
                 item['height'] = meta['th']
                 item['width'] = meta['tw']
             else:
-                item['objURL'] = None
-                item['height'] = None
-                item['width'] = None
+                item['objURL'] = ""
+                item['height'] = 0
+                item['width'] = 0
             item['saveURL'] = "none"
             item['type'] = meta.get('ity','none')
-            item['size'] = "none"
-            item['name'] = meta['objURL'].split('/')[-1]
+            item['size'] = 0
+            item['name'] = item['objURL'].split('/')[-1]
             item['keyword'] = fishtype
             item['classification'] = fishtype
             item['info'] = meta.get('pt', 'none')

@@ -33,7 +33,7 @@ class BaiduSpider(RedisSpider):
             item['width'] = imgmeta['width']
             item['height'] = imgmeta['height']
             item['type'] = imgmeta['type']
-            item['size'] = "none"
+            item['size'] = 0
             item['name'] = imgmeta['objURL'].split('/')[-1]
             item['keyword'] = fishtype
             item['classification'] = fishtype

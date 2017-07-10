@@ -26,8 +26,6 @@ class MyImagePipeline(ImagesPipeline):
 
     def item_completed(self, results, item, info):
         image_path_list = [x['path'] for ok, x in results if ok]
-        print ("filepaths are ",image_path_list, "and length",len(image_path_list))
-        print ("but url path is ", item['objURL'])
         if not image_path_list:
             raise DropItem("Item contains no images")
         item['saveURL'] = image_path_list[0]
@@ -38,7 +36,6 @@ class MyImagePipeline(ImagesPipeline):
         typepath = request.meta['itemtype'].strip().replace(" ","_")
         hashurl = super().file_path(request, response, info)
         filepath = os.path.join(typepath, hashurl.split("/")[-1])
-        print ("during file_path, type name is", request.meta['itemtype'])
         return filepath
 
 class StoreMetaPipeline(object):
