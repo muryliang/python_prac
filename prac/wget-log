@@ -1,0 +1,11 @@
+--2017-07-11 16:07:51--  http://www.algaebase.org/search/distribution/?currentMethod=distro
+Resolving www.algaebase.org... 54.77.143.2, 52.17.210.157
+Connecting to www.algaebase.org|54.77.143.2|:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘index.html?currentMethod=distro’
+
+index.html?currentMethod=distr     [<=>                                                ]       0  --.-KB/s               index.html?currentMethod=distr     [ <=>                                               ]  16.50K  42.7KB/s               index.html?currentMethod=distr     [  <=>                                              ]  29.21K  41.8KB/s               index.html?currentMethod=distr     [   <=>                                             ]  29.21K  41.8KB/s    in 0.7s    
+
+2017-07-11 16:08:05 (41.8 KB/s) - ‘index.html?currentMethod=distro’ saved [29911]
+

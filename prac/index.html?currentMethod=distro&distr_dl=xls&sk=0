@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Search Species Distribution :: Algaebase</title>    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">    <meta name="verify-v1" content="RdsFSimhAlPs6uuc9d1xKjbg2HpQQ9HF+9qa1LQCxcE=">    <script src="/_system,_javascript,_ajax_grail.js+_system,_javascript,_carousel-gallery.js+_shared_core,_javascript,_jquery.dimensions.js+_shared_core,_javascript,_ui.mouse.js+_shared_core,_javascript,_ui.slider.js+_shared_core,_javascript,_jquery.lightbox.js.pagespeed.jc.ahGb11jDSf.js"></script><script>eval(mod_pagespeed_l_5sTYf2ax);</script>    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>    <script>eval(mod_pagespeed_tSEJEeCTTh);</script>    <script>eval(mod_pagespeed_ue_qRPn_cX);</script>    <script>eval(mod_pagespeed_U_ujAu6jQi);</script>    <script>eval(mod_pagespeed_fSyH8hsR7P);</script>    <script>eval(mod_pagespeed_NMRFivhi6y);</script>    <link href="/_domain/css/A.styles.20160116012503.css+dropDown,,_TJK_dropDown.css,,qv==2,Mcc.R3zhjf3Eu6.css.pagespeed.cf.zMmG7pw7pY.css" rel="stylesheet" type="text/css"/>        <style media="screen">#jq_lightbox{position:absolute;left:0;width:100%;z-index:100;text-align:center;line-height:0}#jq_lightbox a img{border:none}#outerImageContainer{position:relative;background-color:#fff;width:250px;height:250px;margin:0 auto}#imageContainer{padding:10px}#loading{position:absolute;top:40%;left:0%;height:25%;width:100%;text-align:center;line-height:0}#hoverNav{position:absolute;top:0;left:0;height:100%;width:100%;z-index:10}#imageContainer>#hoverNav{left:0}#hoverNav a{outline:none}#prevLink,#nextLink{width:49%;height:100%;background:transparent url(/_shared_core/images/blank.gif.pagespeed.ce._JT7DD7YqP.gif) no-repeat;display:block}#prevLink{left:0;float:left}#nextLink{right:0;float:right}#prevLink:hover,#prevLink:visited:hover{background:url(/_shared_core/images/prev.gif.pagespeed.ce.7ybvAIHtAW.gif) left 50% no-repeat}#nextLink:hover,#nextLink:visited:hover{background:url(/_shared_core/images/next.gif.pagespeed.ce.gEVD2qhg6R.gif) right 50% no-repeat}#nextLinkText,#prevLinkText{color:#ff9834;font-weight:bold;text-decoration:none}#nextLinkText{padding-left:20px}#prevLinkText{padding-right:20px}.ontop #imageData{padding-top:5px}#imageDataContainer{font:10px Verdana,Helvetica,sans-serif;background-color:#fff;margin:0 auto;line-height:1.4em}#imageData{padding:0 10px}#imageData #imageDetails{width:70%;float:left;text-align:left}#imageData #caption{font-weight:bold}#imageData #numberDisplay{display:block;clear:left;padding-bottom:1.0em}#imageData #bottomNavClose{width:66px;float:right;padding-bottom:.7em}#imageData #helpDisplay{clear:left;float:left;display:block}#overlay{position:absolute;top:0;left:0;z-index:90;width:100%;height:500px;background-color:#000;filter:alpha(opacity=60);-moz-opacity:.6;opacity:.6;display:none}.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}* html>body .clearfix{display:inline-block;width:100%}* html .clearfix{height:1%}</style>    <script type="text/javascript">$(document).ready(function(){$(".jq_lightbox").jq_lightbox();});var thismessage="The PDF you are about to download may be protected by copyright law. You may download a single copy for personal use only. Publications prior to 1917 are not in copyright.";function copyrightNote(){return confirm(thismessage);}</script>    <script>window.jQuery||document.write("<script src='assets/js/libs/jquery-1.7.1.min.js'>\x3C/script>")</script>    <link rel="stylesheet" href="/_system/css/A.cookiecuttr.css.pagespeed.cf.BkJOl2C-I8.css">    <script src="/_system,_javascript,_jquery.cookie.js+_system,_javascript,_jquery.cookiecuttr.js+_visualid,_javascript,_wz_tooltip.js.pagespeed.jc.rtXM2CFQyY.js"></script><script>eval(mod_pagespeed_lFYfwZpD$U);</script>    <script>eval(mod_pagespeed_IcJQTs7RYL);</script>
+</head>
+<!-- Template main_template -->
+<body class="search">
+  <script>eval(mod_pagespeed_TY_V1dk3sP);</script>
+  <div class="wrap" id="header"> 
+    <a href="/"><script data-pagespeed-no-defer type="text/javascript">//<![CDATA[
+(function(){var g=this;function h(b,d){var a=b.split("."),c=g;a[0]in c||!c.execScript||c.execScript("var "+a[0]);for(var e;a.length&&(e=a.shift());)a.length||void 0===d?c[e]?c=c[e]:c=c[e]={}:c[e]=d};function l(b){var d=b.length;if(0<d){for(var a=Array(d),c=0;c<d;c++)a[c]=b[c];return a}return[]};function m(b){var d=window;if(d.addEventListener)d.addEventListener("load",b,!1);else if(d.attachEvent)d.attachEvent("onload",b);else{var a=d.onload;d.onload=function(){b.call(this);a&&a.call(this)}}};var n;function p(b,d,a,c,e){this.h=b;this.j=d;this.l=a;this.f=e;this.g={height:window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight,width:window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth};this.i=c;this.b={};this.a=[];this.c={}}function q(b,d){var a,c,e=d.getAttribute("data-pagespeed-url-hash");if(a=e&&!(e in b.c))if(0>=d.offsetWidth&&0>=d.offsetHeight)a=!1;else{c=d.getBoundingClientRect();var f=document.body;a=c.top+("pageYOffset"in window?window.pageYOffset:(document.documentElement||f.parentNode||f).scrollTop);c=c.left+("pageXOffset"in window?window.pageXOffset:(document.documentElement||f.parentNode||f).scrollLeft);f=a.toString()+","+c;b.b.hasOwnProperty(f)?a=!1:(b.b[f]=!0,a=a<=b.g.height&&c<=b.g.width)}a&&(b.a.push(e),b.c[e]=!0)}p.prototype.checkImageForCriticality=function(b){b.getBoundingClientRect&&q(this,b)};h("pagespeed.CriticalImages.checkImageForCriticality",function(b){n.checkImageForCriticality(b)});h("pagespeed.CriticalImages.checkCriticalImages",function(){r(n)});function r(b){b.b={};for(var d=["IMG","INPUT"],a=[],c=0;c<d.length;++c)a=a.concat(l(document.getElementsByTagName(d[c])));if(0!=a.length&&a[0].getBoundingClientRect){for(c=0;d=a[c];++c)q(b,d);a="oh="+b.l;b.f&&(a+="&n="+b.f);if(d=0!=b.a.length)for(a+="&ci="+encodeURIComponent(b.a[0]),c=1;c<b.a.length;++c){var e=","+encodeURIComponent(b.a[c]);131072>=a.length+e.length&&(a+=e)}b.i&&(e="&rd="+encodeURIComponent(JSON.stringify(t())),131072>=a.length+e.length&&(a+=e),d=!0);u=a;if(d){c=b.h;b=b.j;var f;if(window.XMLHttpRequest)f=new XMLHttpRequest;else if(window.ActiveXObject)try{f=new ActiveXObject("Msxml2.XMLHTTP")}catch(k){try{f=new ActiveXObject("Microsoft.XMLHTTP")}catch(v){}}f&&(f.open("POST",c+(-1==c.indexOf("?")?"?":"&")+"url="+encodeURIComponent(b)),f.setRequestHeader("Content-Type","application/x-www-form-urlencoded"),f.send(a))}}}function t(){var b={},d=document.getElementsByTagName("IMG");if(0==d.length)return{};var a=d[0];if(!("naturalWidth"in a&&"naturalHeight"in a))return{};for(var c=0;a=d[c];++c){var e=a.getAttribute("data-pagespeed-url-hash");e&&(!(e in b)&&0<a.width&&0<a.height&&0<a.naturalWidth&&0<a.naturalHeight||e in b&&a.width>=b[e].o&&a.height>=b[e].m)&&(b[e]={rw:a.width,rh:a.height,ow:a.naturalWidth,oh:a.naturalHeight})}return b}var u="";h("pagespeed.CriticalImages.getBeaconData",function(){return u});h("pagespeed.CriticalImages.Run",function(b,d,a,c,e,f){var k=new p(b,d,a,e,f);n=k;c&&m(function(){window.setTimeout(function(){r(k)},0)})});})();pagespeed.CriticalImages.Run('/mod_pagespeed_beacon','http://www.algaebase.org/search/distribution/?currentMethod=distro&distr_dl=xls&sk=0','USU-F7OKNO',true,false,'XISuBVYJ9h8');
+//]]></script><img src="/_domain/images/xalgaebase-logo-214.png.pagespeed.ic.NldVbwu57G.png" alt="Algaebase" width="214" height="64" class="logo" data-pagespeed-url-hash="4277265680" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"></a>
+    <div class="floatRight" id="date">
+        07 | 17 - 156
+    </div>
+    <ul id="TJK_dropDown">
+  <!--   <li id="experts"><a href="/experts/">experts</a></li> -->
+  <!--li id="forums"><a href="http://forum.algaebase.org">forums</a></li-->    
+  <!--<li id="donate"><a href="/donate/">donate</a></li>-->    
+  <li id="search"><a href="/search/">search</a>
+    	<ul>
+          <li><a href="/search/taxonomy/">higher taxonomy</a></li>
+          <li><a href="/browse/taxonomy/">taxonomy browser &middot;</a></li>
+          <li><a href="/search/glossary/">glossary &middot;</a></li>
+          <li><a href="/search/distribution/">distribution &middot;</a></li>
+          <li><a href="/search/commonnames/">common names &middot;</a></li>
+          <li><a href="/search/images/">images &middot;</a></li>
+          <!-- <li><a href="/search/author/">author &middot;</a></li>  -->
+          <li><a href="/search/journals/">journals &middot;</a></li>
+          <li><a href="/search/bibliography/">literature &middot;</a></li>
+          <li><a href="/search/species/">species &middot;</a></li>
+          <li><a href="/search/genus/">genus &middot;</a></li>
+        </ul>
+  </li>
+  <li id="contact"><a href="/contact/">contact</a></li>    
+  <li id="links"><a href="/links/">links</a></li>
+  <li id="notulae"><a href="http://www.notulaealgarum.com" target="_blank">notulae algarum</a></li>
+  <li id="team"><a href="/team/">team</a></li>
+  <li id="about"><a href="/about/">about</a></li>
+  <li id="cont"><a href="/content/">content</a></li>
+  <!--li id="home"><a href="/">home</a></li-->
+</ul>
+
+  </div>
+  <div id="stats"> 
+    <strong>148,594</strong> species and infraspecific names are in the database, 
+    <strong>20,303</strong> images, 
+    <strong>57,117</strong> bibliographic items, 
+    <strong>361,282</strong> distributional records.
+  </div>
+  <div class="wrap" id="content">
+    <div id="rightsidebar">
+<!--
+      <div class="sidebarSection" id="news"> 
+        <h2>News</h2>
+      </div>
+//!-->
+      <!--
+<div class="sidebarSection" id="donation"> 
+  <h2 class="redHighlight">Make a donation to algaebase.org</h2>
+  <p>You can make a donation through Paypal to help fund the future maintenance of Algaebase.org:</p>
+  <form target="paypal" action="https://www.paypal.com/cgi-bin/webscr" method="post" style="margin-bottom: 0">
+    <input type="hidden" name="cmd" value="_xclick" />
+    <input type="hidden" name="bn" value="macromedia.contribute.3_0_0" />
+    <input type="hidden" name="business" value="mikeguiry@mac.com" />
+    <input type="hidden" name="item_name" value="Algaebase.org Fund" />
+    <input type="hidden" name="currency_code" value="EUR" />
+    <input type="hidden" name="return" value="http://[(Server_Name)]/donate/thankyou" />
+    <input type="hidden" name="cancel_return" value="http://[(Server_Name)]/donate/failed" />
+    <input type="hidden" name="receiver_email" value="mikeguiry@mac.com" />
+    <input type="hidden" name="mrb" value="R-2K410090UE355584L" />
+    <input type="hidden" name="pal" value="A3X7N2U4UM6U8" />
+    <input type="hidden" name="no_shipping" value="0" />
+    <input type="hidden" name="no_note" value="0" />
+    <input type="image" name="submit" src="/_domain/images/paypal-donate.gif" width="70" height="20" border="0" alt="Make payments with PayPal, it's fast, free, and secure!" />
+  </form>
+<a href="http://www.oceanharvest.ie/" target="_blank"><img src="/_domain/images/ocean-harvest-sponsors.jpg" width="181" height="101" border="0" alt="Sponsored by Ocean Harvest" title="Sponsored by Ocean Harvest" /></a>
+</div>
+//!-->
+
+      <div class="sidebarSection" id="advertising"> 
+        <h2>Recent Species</h2>
+        <p><a href="/search/species/detail/?species_id=D65e6e1b5f2be2ff6"><i>Digenea</i> <i>implexa</i> Zanardini nom. nud.</a></p><p><a href="/search/species/detail/?species_id=ic5a6ec2b330abc6b"><i>Carnegia</i> <i>complexa</i> (Frenguelli) Deflandre</a></p><p><a href="/search/species/detail/?species_id=ybbc46a0ff149ed8f"><i>Clericia</i> <i>complexa</i> Frenguelli</a></p><p><a href="/search/species/detail/?species_id=C10a1e65ecd05b148"><i>Trachelomonas</i> <i>chiloenses</i> Frenguelli</a></p><p><a href="/search/species/detail/?species_id=C78ddd82a585e46c9"><i>Striatella</i> <i>unipunctata</i> f. <i>latestriata</i> Reinsch</a></p><p><a href="/search/species/detail/?species_id=x654f658593972cc4"><i>Stauroneis</i> <i>fuegiana</i> Casa & Van de Vijver</a></p><p><a href="/search/species/detail/?species_id=t94d6c44f23d857d0"><i>Penium</i> <i>spirostriolatum</i> f. <i>rectispirum</i> Grönblad</a></p><p><a href="/search/species/detail/?species_id=P45a79363bae35879"><i>Nupela</i> <i>major</i> Yu, You & Kociolek</a></p><p><a href="/search/species/detail/?species_id=V539351bb08398b98"><i>Nitzschia</i> <i>trobajoae</i> Witkowski, Lange-Bertalot & Kociolek</a></p><p><a href="/search/species/detail/?species_id=Pb1b4465509f273af"><i>Nitzschia</i> <i>simsiae</i> Witkowski, Lange-Bertalot & Kociolek</a></p>
+      </div> 
+    </div>
+    <div class="contentSidebar">
+      
+      <h1>Search Species Distribution</h1>
+      
+      <div id="resultsnav">
+        <div style="width:100%;height:0px;margin:-1px;padding:0px;font-size:0;clear:left;"></div><p>This section of AlgaeBase contains information on the distribution of the species. It is being updated at present and is growing every day.</p>
+<p>Click <a href="/geo_data_mapping">here</a> to view a graphical representation of the progress to date. If you pass your cursor over each country you will get a species-record count for that country.
+<p><script language="JavaScript" type="text/javascript">var thismessage="Are you sure you want to download all species in the current set?";function confirmdownload(){return confirm(thismessage);}</script>
+
+
+
+  	  </div>
+      <div id="contentright">
+        <div style="width:100%;height:0px;margin:-1px;padding:0px;font-size:0;clear:left;"></div>
+	
+
+	
+	<p>Sorry, no records were found with your search parameters. Click <a href="/search/distribution/">Distribution Search</a> to search again. </p>
+	
+
+
+
+      </div>
+    </div>
+  </div>
+  <div id="footer">
+  <div class="wrap logofarm">
+    <p>&nbsp;&nbsp;Algaebase is sponsored by:</p>
+    <div id="carousel-footer">
+                            <div class="holder">
+                                <div class="carousel gallery-slide">
+                                    <div>
+                                        <ul>
+<li><a href="http://www.vliz.be/" target="_blank"><img src="data:image/jpeg;base64,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" border="0" alt="Sponsored by VLIZ" title="Sponsored by VLIZ" data-pagespeed-url-hash="1634673471" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.nuigalway.ie/" target="_blank"><img src="/_domain/images/logos/xnuig-logo.jpg.pagespeed.ic.JkiIzsWUOh.jpg" width="160" height="100" border="0" alt="Sponsored by NUI Galway" title="Sponsored by NUI Galway" data-pagespeed-url-hash="946502321" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<!--<li><a href="http://www.oceanharvest.ie/" target="_blank"><img src="/_domain/images/logos/ocean-harvest-logo.jpg" width="160" height="100" border="0" alt="Sponsored by Ocean Harvest" title="Sponsored by Ocean Harvest" /></a></li>-->
+<li><a href="http://sourui.org/JSPEnglish/welcome.html" target="_blank"><img src="/_domain/images/logos/xjsp-logo.jpg.pagespeed.ic.6vq6hH99GH.jpg" width="160" height="100" border="0" alt="Sponsored by the Japanese Society of Phycology" title="Sponsored by the Japanese Society of Phycology" data-pagespeed-url-hash="1709550181" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.brphycsoc.org/" target="_blank"><img src="/_domain/images/logos/xBPSLogoSmall.jpg.pagespeed.ic.HWrUvMl_5b.jpg" width="160" height="100" border="0" alt="Sponsored by the British Phycological Society" title="Sponsored by the British Phycological Society" data-pagespeed-url-hash="2704498503" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<!--<li><a href="http://www.intphycsoc.org/" target="_blank"><img src="/_domain/images/logos/IPS_200.jpg" width="160" height="100" border="0" alt="Sponsored by the International Phycological Society" title="Sponsored by the International Phycological Society" /></a></li>-->
+<li><a href="http://www.algae.or.kr" target="_blank"><img src="/_domain/images/logos/xkorean-ps2.jpg.pagespeed.ic.26xGY41_Ol.jpg" width="160" height="100" border="0" alt="Sponsored by the Korean Society of Phycology" title="Sponsored by the Korean Society of Phycology" data-pagespeed-url-hash="3716425894" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.sefalgas.org/" target="_blank"><img src="/_domain/images/logos/xLogoSEF2.jpg.pagespeed.ic.LVDFeL9IYi.jpg" width="160" height="100" border="0" alt="Sponsored by the Spanish Society of Phycology" title="Sponsored by the Spanish Society of Phycology" data-pagespeed-url-hash="1240111249" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.psaalgae.org" target="_blank"><img src="/_domain/images/logos/xpsa_logo.jpg.pagespeed.ic.aQrJGO2g9K.jpg" width="160" height="100" border="0" alt="Sponsored by the Phycological Society of America" title="Sponsored by the Phycological Society of America" data-pagespeed-url-hash="2590330860" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.vliz.be/" target="_blank"><img src="data:image/jpeg;base64,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" border="0" alt="Sponsored by VLIZ" title="Sponsored by VLIZ" data-pagespeed-url-hash="1634673471" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.nuigalway.ie/" target="_blank"><img src="/_domain/images/logos/xnuig-logo.jpg.pagespeed.ic.JkiIzsWUOh.jpg" width="160" height="100" border="0" alt="Sponsored by NUI Galway" title="Sponsored by NUI Galway" data-pagespeed-url-hash="946502321" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<!--<li><a href="http://www.oceanharvest.ie/" target="_blank"><img src="/_domain/images/logos/ocean-harvest-logo.jpg" width="160" height="100" border="0" alt="Sponsored by Ocean Harvest" title="Sponsored by Ocean Harvest" /></a></li>-->
+<li><a href="http://sourui.org/JSPEnglish/welcome.html" target="_blank"><img src="/_domain/images/logos/xjsp-logo.jpg.pagespeed.ic.6vq6hH99GH.jpg" width="160" height="100" border="0" alt="Sponsored by the Japanese Society of Phycology" title="Sponsored by the Japanese Society of Phycology" data-pagespeed-url-hash="1709550181" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.brphycsoc.org/" target="_blank"><img src="/_domain/images/logos/xBPSLogoSmall.jpg.pagespeed.ic.HWrUvMl_5b.jpg" width="160" height="100" border="0" alt="Sponsored by the British Phycological Society" title="Sponsored by the British Phycological Society" data-pagespeed-url-hash="2704498503" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<!--<li><a href="http://www.intphycsoc.org/" target="_blank"><img src="/_domain/images/logos/IPS_200.jpg" width="160" height="100" border="0" alt="Sponsored by the International Phycological Society" title="Sponsored by the International Phycological Society" /></a></li>-->
+<li><a href="http://www.algae.or.kr" target="_blank"><img src="/_domain/images/logos/xkorean-ps2.jpg.pagespeed.ic.26xGY41_Ol.jpg" width="160" height="100" border="0" alt="Sponsored by the Korean Society of Phycology" title="Sponsored by the Korean Society of Phycology" data-pagespeed-url-hash="3716425894" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.sefalgas.org/" target="_blank"><img src="/_domain/images/logos/xLogoSEF2.jpg.pagespeed.ic.LVDFeL9IYi.jpg" width="160" height="100" border="0" alt="Sponsored by the Spanish Society of Phycology" title="Sponsored by the Spanish Society of Phycology" data-pagespeed-url-hash="1240111249" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+<li><a href="http://www.psaalgae.org" target="_blank"><img src="/_domain/images/logos/xpsa_logo.jpg.pagespeed.ic.aQrJGO2g9K.jpg" width="160" height="100" border="0" alt="Sponsored by the Phycological Society of America" title="Sponsored by the Phycological Society of America" data-pagespeed-url-hash="2590330860" onload="pagespeed.CriticalImages.checkImageForCriticality(this);"/></a></li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                          </div>
+  <div class="wrap sitemaplinks"> 
+    <p>
+      <a href="/" class="sitemap">Home</a>
+      <a href="/copyright/" class="sitemap">Copyright</a> 
+      <a href="/about/" class="sitemap">About</a> 
+      <a href="/about/" class="sitemap">Funding</a> 
+      <a href="/about/" class="sitemap">Citing</a>
+      <a href="/contributors/" class="sitemap">Contributors</a>
+      <a href="/submit/feedback/" class="sitemap">Submit Feedback</a>
+      <a href="/submit/bibliography/" class="sitemap">Submit Reference</a> 
+      <a href="/search/distribution/" class="sitemap">Distribution by Country</a> 
+      <a href="/search/species/" class="sitemap">Species Search</a> 
+      <a href="/search/genus/" class="sitemap">Genus Search</a>
+      <a href="/search/bibliography/" class="sitemap">Literature Search</a>
+      <a href="/search/images/" class="sitemap">Image Search</a> 
+    </p>
+  </div>
+</div>
+<script type="text/javascript">$(document).ready(function(){$.cookieCuttr({cookieAnalytics:false,cookieMessage:'This website uses cookies to work correctly. Click to read more about our <a href="{{cookiePolicyLink}}" title="MCIB Privacy Policy">Privacy Policy</a>.  ',cookiePolicyLink:'/privacy_policy/',cookieAcceptButtonText:'Accept Cookies'});});</script>
+
+  <div class="wrap" id="signoff">
+    <p class="floatLeft">Website contents &copy; 1996 - 2017 M.D. Guiry. All rights reserved.</p>
+    <p class="floatRight"><a href="http://www.249design.ie/" target="_blank">Website Design : 249 Design Studio</a></p>
+  </div>
+<script type="text/javascript">var gaJsHost=(("https:"==document.location.protocol)?"https://ssl.":"http://www.");document.write(unescape("%3Cscript src='"+gaJsHost+"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));</script>
+<script type="text/javascript">try{var pageTracker=_gat._getTracker("UA-1986737-1");pageTracker._trackPageview();}catch(err){}</script>
+
+</body>
+</html>
+
+
+<!--
+<h1>AlgaeBase Temporarily Offline</h1>
+<p>Apologies, but AlgaeBase is currently unavailable to facilitate essential maintenance.</p>
+-->
