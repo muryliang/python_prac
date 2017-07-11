@@ -8,17 +8,22 @@ import os
 import re
 import urllib
 import json
+import requests
 from lxml.html import fromstring
-from urllib.parse import urlopen,urljoin
+from urllib.parse import urljoin
+from urllib.request import urlopen, Request
 
 class TwSpider(RedisSpider):
     count = 0
     name = "tw"
     Spidername = name
     redis_key = 'twurl'
+    custom_settings = {
+            'CONCURRENT_REQUESTS':4,
+    }
+    myheader = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'}
 
     def parse(self, response):
- #       fishtype = response.meta['type']
         fishtype = re.match('.*key=(.*)$', urllib.parse.unquote(response.url)).group(1).replace("+"," ")
         tree = fromstring(response.text)
         try:
@@ -27,17 +32,16 @@ class TwSpider(RedisSpider):
             detailurl = tree.xpath(xpathstr)[0]
             #response.follow(detailurl, callback=detailParse, meta={'type':fishtype,})
             # scrapy and requests module can not get description info, use urllib instead
-            content = urlopen(urljoin(response.url, detailurl).read().decode('utf-8')
+            req = Request(urljoin(response.url, detailurl), headers=self.myheader)
+            content = urlopen(req).read().decode('utf-8')
         except IndexError as e:
             print ("index error, means that no result")
-            item = FishItem()
-            item['objURL'] = None
             raise StopIteration
 
         detailtree = fromstring(content)
         infostr = str()
         for info in detailtree.xpath("//td[contains(@class, 'tdsp')]"):
-            infostr += str(i.text_content().strip())+' '
+            infostr += str(info.text_content().strip())+' '
         infostr = re.sub('\s+', ' ', infostr)
 
         # internal images
@@ -95,7 +99,6 @@ class TwSpider(RedisSpider):
             yield item
 
     def process_external_images(self, response):
-        headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0'}
         fishtype = response.meta['type']
         infostr = response.meta['infostr']
         fbtree = fromstring(response.text)
@@ -106,7 +109,7 @@ class TwSpider(RedisSpider):
             raise StopIteration # is this needed?
 
         fbimgpage = urljoin(response.url, fbpart)
-        imgpage = requests.get(urljoin(response.url, fbpart), headers = headers)
+        imgpage = requests.get(urljoin(response.url, fbpart), headers = self.myheader)
         imgtree = fromstring(imgpage.text)
         picurls = imgtree.xpath("//a[@class='tooltip']/span/img/@src")
         fbpicurls = [urljoin(response.url, tmpurl) for tmpurl in picurls]
