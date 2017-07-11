@@ -13,7 +13,7 @@ class BaiduSpider(RedisSpider):
     count = 0
     name = "baidu"
     Spidername = name
-    redis_key = 'baidufish'
+    redis_key = 'baiduurl'
     base_url = 'http://image.baidu.com/search/avatarjson?tn=resultjsonavatarnew&ie=utf-8&word={0}&cg=girl&pn={1}&rn=60&itg=0&z=0&fr=&width=&height=&lm=-1&ic=0&s=0&st=-1&gsm=1e0000001e'
 
     def parse(self, response):

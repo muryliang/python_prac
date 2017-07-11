@@ -2,6 +2,7 @@ import pickle
 import redis
 from six.moves.urllib.parse import urlencode
 
+#base class
 class redisConn():
     host='127.0.0.1'
     port=6379
@@ -64,10 +65,9 @@ baidu_base_url = 'http://image.baidu.com/search/avatarjson?tn=resultjsonavatarne
 google_base_url = 'https://www.google.com/search?'
 
 #this is for baidu            
-conn_baidu = baiduConn('baidufish', baidu_base_url, 'chiname')
+conn_baidu = baiduConn('baiduurl', baidu_base_url, 'chiname')
 conn_baidu.insertRedis()
 
-conn_google = googleConn('googlefish', google_base_url, 'engname')
+#this for google
+conn_google = googleConn('googleurl', google_base_url, 'engname')
 conn_google.insertRedis()
-
-

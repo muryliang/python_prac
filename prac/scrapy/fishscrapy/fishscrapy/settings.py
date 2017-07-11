@@ -110,6 +110,7 @@ MYSQL_DB = "fishdb"
 MYSQL_TABLES = {
         "baidu" : "baidumeta",
         "google": "googlemeta",
+        "tw": "twmeta",
 }
 
 # Enables scheduling storing requests queue in redis.

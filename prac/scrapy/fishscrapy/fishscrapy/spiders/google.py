@@ -14,7 +14,7 @@ class GoogleSpider(RedisSpider):
     count = 0
     name = "google"
     Spidername = name
-    redis_key = 'googlefish'
+    redis_key = 'googleurl'
 
     def parse(self, response):
  #       fishtype = response.meta['type']
