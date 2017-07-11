@@ -67,10 +67,11 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 # Store scraped item in redis for post-processing.
+#   but currently I dont't need items stored in redis, so ignore that
 ITEM_PIPELINES = {
     'fishscrapy.pipelines.MyImagePipeline':200,
     'fishscrapy.pipelines.StoreMetaPipeline': 300,
-    'scrapy_redis.pipelines.RedisPipeline': 400,
+#    'scrapy_redis.pipelines.RedisPipeline': 400,
 }
 
 IMAGES_STORE = '/tmp/imagefile';
