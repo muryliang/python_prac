@@ -86,10 +86,25 @@ class algaebaseConn(redisConn):
         for name in lst:
             r.rpush(self.lname, self.base_url + "," + name)
 
+class fishbaseConn(redisConn):
+
+    def insertRedis(self):
+        """insert names into redis
+           algaebase just push name , because requests are post
+        """
+        self.load_name(self.lang)
+        self.getConnPool()
+        r = redis.Redis(connection_pool=self.pool)
+        for name in self.names[:20]:
+            lst = name.split(" ")
+            r.rpush(self.lname, self.base_url.format(lst[0],lst[1]))
+
+
 baidu_base_url = 'http://image.baidu.com/search/avatarjson?tn=resultjsonavatarnew&ie=utf-8&word={0}&cg=girl&pn={1}&rn=60&itg=0&z=0&fr=&width=&height=&lm=-1&ic=0&s=0&st=-1&gsm=1e0000001e'
 google_base_url = 'https://www.google.com/search?'
 tw_base_url = 'http://fishdb.sinica.edu.tw/chi/synonyms_list.php?id=&pz=25&page=0&R1=&key='
 algaebase_base_url = 'http://www.algaebase.org/search/images'
+fishbase_base_url = 'http://fishbase.sinica.edu.tw/Summary/SpeciesSummary.php?genusname={0}&speciesname={1}&lang=Chinese'
 
 #this is for baidu            
 conn_baidu = baiduConn('baiduurl', baidu_base_url, 'chiname')
@@ -107,3 +122,6 @@ conn_tw.insertRedis()
 conn_algaebase = algaebaseConn('algaebaseurl', algaebase_base_url, 'engname')
 conn_algaebase.insertRedis()
 
+#this for fishbase
+conn_fishbase = fishbaseConn('fishbaseurl', fishbase_base_url, 'engname')
+conn_fishbase.insertRedis()
