@@ -102,7 +102,8 @@ MEDIA_ALLOW_REDIRECTS = True
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 #timeout of download metapage & imgs
-DOWNLOAD_TIMEOUT = 10
+#this timeout should not too short, algaebase require more than 40s
+DOWNLOAD_TIMEOUT = 100
 
 MYSQL_HOST = "127.0.0.1"
 MYSQL_USER = "root"
@@ -112,6 +113,7 @@ MYSQL_TABLES = {
         "baidu" : "baidumeta",
         "google": "googlemeta",
         "tw": "twmeta",
+        "algaebase": "algaebasemeta",
 }
 
 # Enables scheduling storing requests queue in redis.
@@ -119,6 +121,7 @@ SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 
 # Ensure all spiders share same duplicates filter through redis.
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+DUPEFILTER_DEBUG = True
 
 # Default requests serializer is pickle, but it can be changed to any module
 # with loads and dumps functions. Note that pickle is not compatible between

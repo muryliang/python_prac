@@ -59,5 +59,5 @@ class FishscrapySpiderMiddleware(object):
 class MyCustomDownloaderMiddleware():
     def process_request(self, request, spider):
         """set proxy for google(using privoxy"""
-        if spider.name == 'google':
+        if spider.name in ['google']:
             request.meta['proxy'] = 'http://127.0.0.1:8118'

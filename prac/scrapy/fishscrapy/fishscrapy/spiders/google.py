@@ -52,12 +52,6 @@ class GoogleSpider(RedisSpider):
             self.count += 1
             yield item
 
-    def load_name(self):
-        csvfile = "/home/sora/fishsorts.dat"
-        with open(csvfile, "rb") as f:
-            fishnames = pickle.load(f)
-            self.engname = fishnames['chiname']
-
     def getSpiderinfo(self):
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

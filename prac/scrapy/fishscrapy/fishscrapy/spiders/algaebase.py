@@ -1,4 +1,5 @@
 from scrapy_redis.spiders import RedisSpider
+from scrapy_redis.utils import bytes_to_str
 from fishscrapy.items import FishItem;
 import scrapy
 import json
@@ -7,46 +8,78 @@ import socket
 import os
 import re
 import urllib
+from lxml.html import fromstring
 
 #class BaiduSpider(scrapy.Spider):
-class BaiduSpider(RedisSpider):
+class algaebaseSpider(RedisSpider):
     count = 0
-    name = "baidu"
+    name = "algaebase"
     Spidername = name
-    redis_key = 'baiduurl'
-    base_url = 'http://image.baidu.com/search/avatarjson?tn=resultjsonavatarnew&ie=utf-8&word={0}&cg=girl&pn={1}&rn=60&itg=0&z=0&fr=&width=&height=&lm=-1&ic=0&s=0&st=-1&gsm=1e0000001e'
+    redis_key = 'algaebaseurl'
 
     def parse(self, response):
- #       fishtype = response.meta['type']
-        fishtype = re.match('.*word=(.*)&cg.*', urllib.parse.unquote(response.url)).group(1)
-        imgdict = json.loads(response.text)['imgs']
-        for imgmeta in imgdict:
+        fishtype = response.meta['type']
+        tree = fromstring(response.text)
+
+#        with open("/tmp/list2.html" ,"w") as f:
+#            f.write(response.text)
+        try:
+            searchurl = tree.xpath("//td/p/a[contains(@href,'search')]/@href")[0]
+            name = tree.xpath("//td/p/a[contains(@href,'search')]/text()")[0]
+            name = name.split(" ")[0] + name.split(" ")[1]
+            #thumbnails are tree.xpath("//td/p/a/img/@src")
+            if name.strip().replace(" ","").lower() == fishtype.strip().replace(" ", "").lower():
+                yield response.follow(searchurl, meta = {'type':fishtype}, callback = self.detailparse)
+            else:
+                print ("name not same", name.strip().replace(" ","").lower(), fishtype.strip().replace(" ", "").lower())
+                return None
+        except IndexError as e:
+            print ("search no found, skip ", response.url, response.status)
+            return None
+
+    def detailparse(self, response):
+        fishtype = response.meta['type']
+        tree = fromstring(response.text)
+
+        #parse first 10 pictures
+        pictureurls = tree.xpath("//p[@class='speciesimages']/a/@href")
+        for item in self.parse_pictures(response.url, pictureurls, fishtype):
+            yield item
+        for url in tree.xpath("//p/a/@href"):
+            if "sk=" in url:
+                yield scrapy.Request(urllib.parse.urljoin(response.url, url), 
+                        meta={'type':fishtype}, callback=self.picparse)
+
+    def picparse(self, response):
+        fishtype = response.meta['type']
+        tree = fromstring(response.text)
+        pictureurls = tree.xpath("//p[@class='speciesimages']/a/@href")
+        print ("begin parse pictures")
+        for item in self.parse_pictures(response.url, pictureurls, fishtype):
+            yield item
+
+    def parse_pictures(self, fromurl, urllist, fishtype):
+        print ("now in item processing")
+        for url in urllist:
             item = FishItem()
             item['Spidername'] = self.Spidername
             item['Spiderinfo'] = self.getSpiderinfo()
-            item['fromURL'] = imgmeta['fromURL']
+            item['fromURL'] = fromurl
 #            item['thumbURL'] = imgmeta['thumbURL']
             item['thumbURL'] = "none"  #这个是本地的
-            item['fromURL'] = imgmeta['fromURL']
-            item['objURL'] = imgmeta['objURL']
+            item['objURL'] = url
             item['saveURL'] = "none"
-            item['width'] = imgmeta['width']
-            item['height'] = imgmeta['height']
-            item['type'] = imgmeta['type']
+            item['width'] = 0
+            item['height'] = 0
+            item['type'] = item['objURL'].split(".")[-1]
             item['size'] = 0
-            item['name'] = imgmeta['objURL'].split('/')[-1]
+            item['name'] = item['objURL'].split('/')[-1]
             item['keyword'] = fishtype
             item['classification'] = fishtype
             item['info'] = "currently none"
             item['count'] = self.count
             self.count += 1
             yield item
-
-    def load_name(self):
-        csvfile = "/home/sora/fishsorts.dat"
-        with open(csvfile, "rb") as f:
-            fishnames = pickle.load(f)
-            self.engname = fishnames['chiname']
 
     def getSpiderinfo(self):
         try:
@@ -63,6 +96,9 @@ class BaiduSpider(RedisSpider):
 
     def make_request_from_data(self, data):
         """override method"""
-        base_url, fishtype = data.split(" ")
-        formdata = {'currentMethod':'imgs', 'fromSearch':'yes','displayCount':'200','query':data,'-Search':'Search'}
-        scrapy.FormRequest(url=baseurl, method="POST", meta = {'type':fishtype},callback=self.parse, formdata = formdata) 
+        print ("start to process")
+        datastr = bytes_to_str(data, self.redis_encoding)
+        base_url, fishtype = [a.strip() for a in datastr.split(",")]
+        formdata = {'currentMethod':'imgs', 'fromSearch':'yes','displayCount':'200','query':fishtype,'-Search':'Search'}
+        return scrapy.FormRequest(url=base_url, meta = {'type':fishtype},
+                callback=self.parse, formdata = formdata, dont_filter=True) 

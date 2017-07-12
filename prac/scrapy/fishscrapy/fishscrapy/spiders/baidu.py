@@ -24,7 +24,6 @@ class BaiduSpider(RedisSpider):
             item = FishItem()
             item['Spidername'] = self.Spidername
             item['Spiderinfo'] = self.getSpiderinfo()
-            item['fromURL'] = imgmeta['fromURL']
 #            item['thumbURL'] = imgmeta['thumbURL']
             item['thumbURL'] = "none"  #这个是本地的
             item['fromURL'] = imgmeta['fromURL']
@@ -41,12 +40,6 @@ class BaiduSpider(RedisSpider):
             item['count'] = self.count
             self.count += 1
             yield item
-
-    def load_name(self):
-        csvfile = "/home/sora/fishsorts.dat"
-        with open(csvfile, "rb") as f:
-            fishnames = pickle.load(f)
-            self.engname = fishnames['chiname']
 
     def getSpiderinfo(self):
         try:

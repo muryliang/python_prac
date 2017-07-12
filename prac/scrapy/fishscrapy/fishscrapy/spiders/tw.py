@@ -36,7 +36,7 @@ class TwSpider(RedisSpider):
             content = urlopen(req).read().decode('utf-8')
         except IndexError as e:
             print ("index error, means that no result")
-            raise StopIteration
+            return None
 
         detailtree = fromstring(content)
         infostr = str()
@@ -106,7 +106,7 @@ class TwSpider(RedisSpider):
             fbpart = fbtree.xpath("//span[@class='slabel8']/a/@href")[0]
         except IndexError as e:
             print ("error when get img page external")
-            raise StopIteration # is this needed?
+            return None # is this needed?
 
         fbimgpage = urljoin(response.url, fbpart)
         imgpage = requests.get(urljoin(response.url, fbpart), headers = self.myheader)
@@ -133,12 +133,6 @@ class TwSpider(RedisSpider):
             item['info'] = infostr
             item['count'] = 0 # not used in tw
             yield item
-
-    def load_name(self):
-        csvfile = "/home/sora/fishsorts.dat"
-        with open(csvfile, "rb") as f:
-            fishnames = pickle.load(f)
-            self.engname = fishnames['chiname']
 
     def getSpiderinfo(self):
         try:
