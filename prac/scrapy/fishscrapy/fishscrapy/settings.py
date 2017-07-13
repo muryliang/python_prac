@@ -71,7 +71,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     'fishscrapy.pipelines.MyImagePipeline':200,
     'fishscrapy.pipelines.StoreMetaPipeline': 300,
-#    'scrapy_redis.pipelines.RedisPipeline': 400,
+    'scrapy_redis.pipelines.RedisPipeline': 400,
 }
 
 IMAGES_STORE = '/tmp/imagefile';
@@ -123,6 +123,9 @@ SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 # Ensure all spiders share same duplicates filter through redis.
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 DUPEFILTER_DEBUG = True
+
+#duplicate url's key,this is a redis hashtable
+DUPKEY = "scrapy:existurls"
 
 # Default requests serializer is pickle, but it can be changed to any module
 # with loads and dumps functions. Note that pickle is not compatible between

@@ -12,6 +12,7 @@ from twisted.enterprise import adbapi
 from scrapy.exceptions import DropItem
 import pymysql
 import os
+from scrapy_redis.dupefilter import RFPDupeFilter
 #import re
 
 class MyImagePipeline(ImagesPipeline):
@@ -82,3 +83,20 @@ class StoreMetaPipeline(object):
         print('-------------------------------------------------------------')
         print(failue)
 
+
+class DupDetect(RFPDupeFilter):
+    
+    def request_seen(self, request):
+        """rewrite the request_seen method 
+           #TODO:need change to bloomfilter method
+        """
+        key = spider.settings.attributes['DUPKEY'].value
+        fp = self.request_fingerprint(request)
+        added = self.server.sadd(key, fp)
+        return added == 0
+
+    def close(self, reason=""):
+        """do not delete that redis set key, because that will
+           be used everytime scrapying
+        """
+        pass
