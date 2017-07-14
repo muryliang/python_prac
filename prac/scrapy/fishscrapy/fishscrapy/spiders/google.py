@@ -1,4 +1,5 @@
 from scrapy_redis.spiders import RedisSpider
+from scrapy_redis.utils import bytes_to_str
 from fishscrapy.items import FishItem;
 import scrapy
 import json
@@ -64,4 +65,9 @@ class GoogleSpider(RedisSpider):
         pid = os.getpid()
         infostr="pid: %s; ip: %s;"%(pid, ip)
         return infostr
+
+    def make_request_from_data(self, data):
+        """override method"""
+        base_url = bytes_to_str(data, self.redis_encoding)
+        return scrapy.Request(url=base_url, dont_filter=True) 
 

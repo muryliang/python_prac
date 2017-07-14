@@ -71,7 +71,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     'fishscrapy.pipelines.MyImagePipeline':200,
     'fishscrapy.pipelines.StoreMetaPipeline': 300,
-    'scrapy_redis.pipelines.RedisPipeline': 400,
+#    'scrapy_redis.pipelines.RedisPipeline': 400,
 }
 
 IMAGES_STORE = '/tmp/imagefile';
@@ -103,7 +103,7 @@ MEDIA_ALLOW_REDIRECTS = True
 
 #timeout of download metapage & imgs
 #this timeout should not too short, algaebase require more than 40s
-DOWNLOAD_TIMEOUT = 100
+DOWNLOAD_TIMEOUT = 20
 
 MYSQL_HOST = "127.0.0.1"
 MYSQL_USER = "root"
@@ -121,11 +121,11 @@ MYSQL_TABLES = {
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 
 # Ensure all spiders share same duplicates filter through redis.
-DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+#DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+DUPEFILTER_CLASS = 'fishscrapy.pipelines.DupDetect'
 DUPEFILTER_DEBUG = True
-
-#duplicate url's key,this is a redis hashtable
-DUPKEY = "scrapy:existurls"
+##NOTICE
+#bloomfilter's settings are in piplines.py
 
 # Default requests serializer is pickle, but it can be changed to any module
 # with loads and dumps functions. Note that pickle is not compatible between

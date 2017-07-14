@@ -4,9 +4,14 @@ from six.moves.urllib.parse import urlencode
 
 #base class
 class redisConn():
+    """read class name from file,these data are
+       preprocessed from
+       /home/sora/fishsorts(2).dat
+    """
     host='127.0.0.1'
     port=6379
-    csvfile = "/home/sora/fishsorts.dat"
+    engfile = "/home/sora/twengname_processed.dat"
+    chifile = "/home/sora/twchiname_processed.dat"
     
     def __init__(self, lname='fish', base_url="", lang='engname'):
         """initialize with list's name and base_url
@@ -24,9 +29,12 @@ class redisConn():
         """load dictionary from picklefile
             sort: chiname or engname
         """
-        with open(self.csvfile, "rb") as f:
-            fishnames = pickle.load(f)
-            self.names = fishnames[sort]
+        if sort == 'engname':
+            with open(self.engfile, "rb") as f:
+                self.names = pickle.load(f)
+        else:
+            with open(self.chifile, "rb") as f:
+                self.names = pickle.load(f)
 
     def insertRedis(self):
         """insert names into redis
@@ -42,7 +50,7 @@ class baiduConn(redisConn):
         self.getConnPool()
         r = redis.Redis(connection_pool=self.pool)
         for name in self.names[:5]:
-            for page in range(0,900,60):
+            for page in range(0,480,60):
                 r.rpush(self.lname, self.base_url.format(name,str(page)))
 
 class googleConn(redisConn):
