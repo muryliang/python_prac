@@ -115,6 +115,7 @@ MYSQL_TABLES = {
         "tw": "twmeta",
         "algaebase": "algaebasemeta",
         "fishbase": "fishbasemeta",
+        "bing": "bingmeta",
 }
 
 # Enables scheduling storing requests queue in redis.

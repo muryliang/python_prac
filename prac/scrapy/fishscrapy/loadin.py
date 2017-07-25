@@ -108,28 +108,46 @@ class fishbaseConn(redisConn):
             r.rpush(self.lname, self.base_url.format(lst[0],lst[1]))
 
 
+class bingConn(redisConn):
+
+    def insertRedis(self):
+        """insert names into redis
+           algaebase just push name , because requests are post
+        """
+        self.load_name(self.lang)
+        self.getConnPool()
+        r = redis.Redis(connection_pool=self.pool)
+        for name in self.names[:20]:
+            for page in range(0,240,60):
+                r.rpush(self.lname, self.base_url.format(name,str(page)))
+
 baidu_base_url = 'http://image.baidu.com/search/avatarjson?tn=resultjsonavatarnew&ie=utf-8&word={0}&cg=girl&pn={1}&rn=60&itg=0&z=0&fr=&width=&height=&lm=-1&ic=0&s=0&st=-1&gsm=1e0000001e'
 google_base_url = 'https://www.google.com/search?'
 tw_base_url = 'http://fishdb.sinica.edu.tw/chi/synonyms_list.php?id=&pz=25&page=0&R1=&key='
 algaebase_base_url = 'http://www.algaebase.org/search/images'
 fishbase_base_url = 'http://fishbase.sinica.edu.tw/Summary/SpeciesSummary.php?genusname={0}&speciesname={1}&lang=Chinese'
+bing_base_url = 'http://cn.bing.com/images/async?q={0}&first={1}&count=60&mmasync=1&iid=images'
 
 #this is for baidu            
-conn_baidu = baiduConn('baiduurl', baidu_base_url, 'chiname')
-conn_baidu.insertRedis()
+#conn_baidu = baiduConn('baiduurl', baidu_base_url, 'chiname')
+#conn_baidu.insertRedis()
 
 #this for google
-conn_google = googleConn('googleurl', google_base_url, 'engname')
-conn_google.insertRedis()
+#conn_google = googleConn('googleurl', google_base_url, 'engname')
+#conn_google.insertRedis()
 
 #this for taiwan
-conn_tw = twConn('twurl', tw_base_url, 'engname')
-conn_tw.insertRedis()
+#conn_tw = twConn('twurl', tw_base_url, 'engname')
+#conn_tw.insertRedis()
 
 #this for algaebase
-conn_algaebase = algaebaseConn('algaebaseurl', algaebase_base_url, 'engname')
-conn_algaebase.insertRedis()
+#conn_algaebase = algaebaseConn('algaebaseurl', algaebase_base_url, 'engname')
+#conn_algaebase.insertRedis()
 
 #this for fishbase
-conn_fishbase = fishbaseConn('fishbaseurl', fishbase_base_url, 'engname')
+#conn_fishbase = fishbaseConn('fishbaseurl', fishbase_base_url, 'engname')
+#conn_fishbase.insertRedis()
+
+#this for bing
+conn_fishbase = bingConn('bingurl', bing_base_url, 'engname')
 conn_fishbase.insertRedis()
