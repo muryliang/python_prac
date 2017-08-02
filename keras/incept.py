@@ -16,8 +16,6 @@ def updatedb(cur, conn, saveurl, ratelist, tablename, classlist):
             flag = 2
             break
 
-    tablename = 'algaebasemeta'
-    saveurl = 'imgdata/hehe/10a1c30f059b1e5250cebb2a5dd7656a5a4f17f4.jpg'
     cur.execute("update {0} set isfish=%s, top5rate=%s where saveURL=%s;".format(tablename),
         (str(flag), str(ratelist), saveurl))
     conn.commit()
@@ -36,15 +34,15 @@ if not os.path.exists(basedir):
 conn = pymysql.connect(host='127.0.0.1', user='root', passwd='123456', db='fishdb', use_unicode=True, charset='utf8')
 cur = conn.cursor()
 # redis conn: get directory
-r = redis.Redis(host=redishost, port=6379)
+r = redis.StrictRedis(host=redishost, port=6379)
 
-classlist = set("tench", "goldfish", "great_white_shark", "tiger_shark", "hammerhead", "electric_ray", 
+classlist = set(["tench", "goldfish", "great_white_shark", "tiger_shark", "hammerhead", "electric_ray", 
         "stingray", "loggerhead", "leatherback_turtle", "mud_turtle", "terrapin", "box_turtle", "African_crocodile",
         "American_alligator", "jellyfish", "sea_anemone", "brain_coral", "flatworm", "nematode", "conch",
         "snail", "slug", "sea_slug", "chiton", "chambered_nautilus", "Dungeness_crab", "rock_crab", "fiddler_crab", 
         "king_crab", "American_lobster", "spiny_lobster", "crayfish", "hermit_crab", "isopod", "king_penguin", 
         "grey_whale", "killer_whale", "dugong", "sea_lion", "starfish", "sea_urchin", "sea_cucumber", "barracouta",
-        "eel", "coho", "rock_beauty", "anemone_fish", "sturgeon", "gar", "lionfish", "puffer") 
+        "eel", "coho", "rock_beauty", "anemone_fish", "sturgeon", "gar", "lionfish", "puffer"]) 
 
 ## create model
 input_tensor = Input((299,299,3))
@@ -53,12 +51,13 @@ x = Lambda(preprocess_input)(x)
 model = InceptionV3(input_tensor=x, weights='imagenet', include_top=True)
 
 # in a while loop
+print ("start loop")
 while True:
     origname = r.lpop(dirqueue)
     if origname is None:
         break
     origname = origname.decode('utf8') # get from redis
-
+    print ("begin propressing ",origname)
     datasavefile = os.path.join(origname, existfile) # check if already analized
     if os.path.exists(datasavefile):
         print ("already downloaded %s"%(origname))
@@ -81,17 +80,20 @@ while True:
     assert len(preds) == len(filelist)
 
     reslist = decode_predictions(preds, top=5)
+    print ("begin insert")
     for name, rate in zip(filelist, reslist):
         name = name.split('/')[-1]
-        name = os.path.join('/'.join(origname.split('/')[-3:-1]), name)
-        spider = origname.split('/')[-3]
+        name = os.path.join('/'.join(origname.split('/')[-2:]), name)
+        spider = origname.split('/')[-2]
         updatedb(cur, conn, name, rate, spider + "meta", classlist) # mysql update statement
 
+    print ("after insert")
     # used as a check whether already processed
     with open(datasavefile, "wb") as f:
         pickle.dump(list(zip(preds, filelist)), f)
 
     os.remove(picdir)
+    print ("finish propressing ",origname)
     #while loop end
 conn.commit()
 cur.close()
