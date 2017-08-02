@@ -46,11 +46,11 @@ def simulate():
                 deq = q.dequeue()
                 totaltime += time.time() - deq.currentSecond
                 p.addJob(deq)
-                print ("add to printer %f, last for %d sec"%(deq.currentSecond, p.time))
+                print ("add to printer %f, last for %d microsec"%(deq.currentSecond, p.time))
         p.decTime() # reduce printer time
         if count == CEIL:
             break
-        time.sleep(0.001) # 1 milisecond to simulate 1 second
+        time.sleep(1) # 1 milisecond to simulate 1 second
     print ("done, all waiting time is %.3f and avg is %.6f"%(totaltime, totaltime / CEIL))
 
 if __name__ == "__main__":

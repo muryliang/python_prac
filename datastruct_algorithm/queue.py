@@ -16,6 +16,9 @@ class Queue():
     def size(self):
         return len(self.q)
 
+    def clean(self):
+        self.q.clear()
+
 if __name__ == "__main__":
     q = Queue()
     print (q.isEmpty())
