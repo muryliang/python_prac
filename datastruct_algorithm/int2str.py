@@ -1,8 +1,8 @@
 def int2base2(num, base):
     assert base >= 2 and base <= 16
     """ return: s  string"""
-    if num == 0:
-        return ""
+    if num < base:
+        return str("0123456789abcdef"[num])
     return int2base2(num // base, base) + str("0123456789abcdef"[num % base])
 
 num = int(input("input your number: "))
