@@ -23,7 +23,8 @@ class route():
         t.pensize(pensize)
 
         # draw every blocks with rate
-#        for i, j in ((x,y) for x in range(blks) for y in range(blks)):
+        # should traverse x as main and y as inner loop ,so every inner list
+        # is vertical, so the (x, y) can mean map[x][y]
         for i in range(blks):
             self.map.append(list())
             for j in range(blks):
@@ -138,12 +139,12 @@ class route():
             self.drawCircle(color='red')
         return res
         
-blks = 10
-rate = 0.3
-turtle.delay(1)
-r = route(rate = rate, blks = blks, dest = (8,7))
-pprint.pprint(r.map)
-#turtle.delay(10)
-r.setPos(0,0)
-r.start()
-r.screen.exitonclick()
+if __name__ == '__main__':
+    blks = 10
+    rate = 0.3
+    turtle.delay(1)
+    r = route(rate = rate, blks = blks, dest = (8,7))
+    pprint.pprint(r.map)
+    r.setPos(0,0)
+    r.start()
+    r.screen.exitonclick()
