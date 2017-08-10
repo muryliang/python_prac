@@ -16,6 +16,7 @@ class route():
 
         self.turtle = turtle.Turtle()
         t = self.turtle
+        turtle.setup(width=640, height=600)
         self.screen = turtle.Screen()
         s = self.screen
         self.unith = s.window_height() // blks
