@@ -26,6 +26,7 @@ class route():
         # draw every blocks with rate
         # should traverse x as main and y as inner loop ,so every inner list
         # is vertical, so the (x, y) can mean map[x][y]
+        turtle.tracer(blks**2)
         for i in range(blks):
             self.map.append(list())
             for j in range(blks):
@@ -48,6 +49,7 @@ class route():
                 t.right(90)
                 t.forward(self.unith)
                 t.end_fill()
+        turtle.tracer(1)
 
     def setPos(self, x, y):
         """set cursor's position"""
@@ -141,7 +143,7 @@ class route():
         return res
         
 if __name__ == '__main__':
-    blks = 10
+    blks = 20
     rate = 0.3
     turtle.delay(1)
     r = route(rate = rate, blks = blks, dest = (8,7))
