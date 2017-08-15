@@ -23,37 +23,45 @@ def midOfThree(lst, lo, hi):
             return lo
 
 def split(lst, lo, hi):
-    idx = midOfThree(lst, lo, hi)
-    lst[lo], lst[idx] = lst[idx], lst[lo]
+    """everything before(not inclusive) lt is less than to sample, everything after
+    gt is  greater than sample, [lt, gt] are equals
+    """
+
+#    idx = midOfThree(lst, lo, hi)
+#    lst[lo], lst[idx] = lst[idx], lst[lo]
 
     sample = lst[lo]
-    left = lo + 1
-    right = hi
+    i = lo
+    lt = lo
+    gt = hi
     done = False
 
     while not done:
-        while left <= right and lst[left] <= sample:
-            left += 1
-        while right >= left and lst[right] >= sample:
-            right -= 1
+        while i <= gt and lst[i] == sample:
+            i += 1
 
-        if right < left:
+        if i > gt:
             done = True
-        else:
-            lst[right], lst[left] = lst[left], lst[right]
 
-    lst[lo], lst[right] = lst[right], lst[lo]
-    return right
+        elif lst[i] < sample:
+            lst[i], lst[lt] = lst[lt], lst[i]
+            i += 1
+            lt += 1
+        elif lst[i] > sample:
+            lst[i], lst[gt] = lst[gt], lst[i]
+            gt -= 1
+
+    return lt, gt
 
 def qsort(lst, lo, hi):
     limit = 13
     if hi > lo:
         if hi - lo < limit:
             insert.insertInto(lst, lo, hi)
-        splitpoint = split(lst, lo, hi)
+        lt, gt = split(lst, lo, hi)
 
-        qsort(lst, lo, splitpoint-1)
-        qsort(lst, splitpoint+1, hi)
+        qsort(lst, lo, lt-1)
+        qsort(lst, gt+1, hi)
 
 if __name__ == "__main__":
     lst = [6,5,4,3,2,1]

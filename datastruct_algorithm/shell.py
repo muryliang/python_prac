@@ -1,12 +1,15 @@
 def shell(lst):
     """first choose the gap, then from start to gap-1, do insert over stride gap"""
+    gaplist = list()
+    tmpgap = 1
+    while tmpgap < len(lst):
+        gaplist.append(tmpgap)
+        tmpgap = 3**tmpgap + 1 
 
-    gap = len(lst) // 2
-
-    while gap >= 1:
+    while len(gaplist) > 0:
+        gap = gaplist.pop()
         for i in range(gap):
             insertsort(lst, i, gap)
-        gap //=2
 
 def insertsort(lst, start, gap):
     for i in range(start + gap, len(lst), gap):
@@ -18,7 +21,8 @@ def insertsort(lst, start, gap):
         lst[idx] = tmp
 
         
-lst = [6,5,4,3,2,1]
-shell(lst)
-print (lst)
+if __name__ == "__main__":
+    lst = [6,5,4,3,2,1]
+    shell(lst)
+    print (lst)
 
