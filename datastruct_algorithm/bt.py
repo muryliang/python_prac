@@ -38,11 +38,10 @@ def consTree(lst):
     t = BinaryTree("")
     s = [] # used as a stack
 
+    s.append(t)
     while len(lst) != 0:
         char = lst.pop(0)
 
-        print (s)
-        print ("char is", char)
         if char == "(":
             t.insertLeft("")
             s.append(t)
