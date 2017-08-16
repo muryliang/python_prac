@@ -121,6 +121,7 @@ class Map:
                 leftMin.setLeftChild(root.getLeftChild())
                 leftMin.setRightChild(root.getRightChild())
                 root = leftMin
+            self.size -= 1
         return root
 
     def get(self, key):
