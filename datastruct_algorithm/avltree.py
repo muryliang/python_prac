@@ -223,39 +223,14 @@ def traverseInorder(tree):
 
 if __name__ == "__main__":
     h = Map()
-    h[54] = 'cat'
-    h[26] = 'dog'
-    h[93] = 'lion'
-    h[17] = 'tiger'
-    h[77] = 'bird'
-    h[31] = 'cow'
-    h[44] = 'goat'
-    h[55] = 'pig'
-    h[20] = 'chicken'
+    h[1] = 'cat'
+    h[2] = 'dog'
+    h[3] = 'lion'
+    h[4] = 'tiger'
+    h[5] = 'bird'
+    h[6] = 'cow'
+    h[7] = 'goat'
+    h[8] = 'pig'
+    h[9] = 'chicken'
     traverseInorder(h.head)
     print (h.head.size)
-    print (h[55], h[44])
-    del h[55]
-    traverseInorder(h.head)
-    print (h.head.size)
-    del h[44]
-    traverseInorder(h.head)
-    print (h.head.size)
-    print ('bird' in h)
-    print ('pig' in h)
-    print ('goat' in h)
-    del h[77]
-    traverseInorder(h.head)
-    print (h.head.getKey(), h.head.size)
-    del h[17]
-    traverseInorder(h.head)
-    print (h.head.size)
-    del h[29]
-    traverseInorder(h.head)
-    print (h.head.size)
-    del h[20]
-    traverseInorder(h.head)
-    print (h.head.getKey(), h.head.size)
-    del h[93]
-    traverseInorder(h.head)
-    print (h.head.getKey(), h.head.size)
