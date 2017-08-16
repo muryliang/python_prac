@@ -1,9 +1,25 @@
+from queue import Queue
+
 class Vertex:
     """this represent a vertex and vertexes connected to it"""
 
     def __init__(self, key):
         self.id = key
         self.connectedTo = {}
+        self.color = "white"
+        self.prev = None
+
+    def getPrev(self):
+        return self.prev
+
+    def setPrev(self, prev):
+        self.prev = prev
+
+    def getColor(self):
+        return self.color
+
+    def setColor(self, color):
+        self.color = color
 
     def addNeighbor(self, nbr, weight=0):
         self.connectedTo[nbr] = weight
@@ -53,6 +69,35 @@ class Graph:
 
     def __iter__(self):
         return iter(self.vertList.values())
+
+    def dfs(self, start, dest):
+        self.getVertex(start).setPrev(None)
+        q = Queue()
+        q.enqueue(start)
+        found = False
+        while not q.isEmpty() and not found:
+            name = q.dequeue()
+            if name == dest:
+                found = True
+                break
+            vetex = self.getVertex(name)
+            for tmpv in vetex.getConnections():
+                if tmpv.getColor() == "white":
+                    tmpv.setColor("gray")
+                    q.enqueue(tmpv.getId())
+                    tmpv.setPrev(vetex)
+            vetex.setColor("black")
+
+        if found:
+            print ("found")
+            tmp = self.getVertex(dest)
+            while tmp is not None:
+                print (tmp.getId(), end=" -> ")
+                tmp = tmp.getPrev()
+        else:
+            print ("not found")
+
+
 
 if __name__ == "__main__":
     g = Graph()
