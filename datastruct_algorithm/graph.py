@@ -8,6 +8,20 @@ class Vertex:
         self.connectedTo = {}
         self.color = "white"
         self.prev = None
+        self.discovery = 0
+        self.finish = 0
+
+    def setDiscovery(self, time):
+        self.discovery = time
+
+    def getDiscovery(self):
+        return self.discovery
+
+    def setFinish(self, time):
+        self.finish = time
+
+    def getFinish(self):
+        return self.finish
 
     def getPrev(self):
         return self.prev

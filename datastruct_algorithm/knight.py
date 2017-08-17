@@ -1,7 +1,7 @@
-from graph import Graph
+from dfsgraph import DFSGraph
 
 def knightGraph(bdSize):
-    ktGraph = Graph()
+    ktGraph = DFSGraph()
 
     for row in range(bdSize):
         for col in range(bdSize):
@@ -36,7 +36,7 @@ def knightTour(n, path, u, limit):
     u.setColor('gray')
     path.append(u.getId())
     if len(path) < limit:
-        nbrList = list(u.getConnections())
+        nbrList = orderByAvail(u)
         i = 0
         done = False
         while i < len(nbrList) and not done:
@@ -50,9 +50,23 @@ def knightTour(n, path, u, limit):
         done = True
     return done
 
+def orderByAvail(n):
+    resList = []
+    for v in n.getConnections():
+        c = 0
+        for w in v.getConnections():
+            if w.getColor() == "white":
+                c += 1
+        resList.append((c, v))
+    resList.sort(key=lambda x: x[0])
+    return [y[1] for y in resList]
+
+
 if __name__ == "__main__":
     k = 8
     g = knightGraph(k)
     path = list()
-    print (knightTour(0, path, g.getVertex(0), k**2))
-    print (path)
+    g.dfs()
+    g.SCC(g)
+#    print (knightTour(0, path, g.getVertex(0), k**2))
+#    print (path)
