@@ -1,4 +1,4 @@
-def twoSum(nums, target, pos):
+def twoSumClosest(nums, target, pos):
     lst = nums
     start = pos
     end = len(nums)-1
@@ -19,8 +19,11 @@ def twoSum(nums, target, pos):
             start += 1
     return reslist
 
-def threeSum(nums):
-    """find three numbers sum to 0, first select one ,then find another two's target"""
+def threeSumClosest(nums):
+    """method: like three, first find twoSumClosest, but return two list for 
+        every element, one positive least pair, one negative pair
+        the outer loop update the least pair every time
+    """
     nums.sort()
     reslist = list()
     for idx, elem in enumerate(nums):
@@ -30,32 +33,6 @@ def threeSum(nums):
                 reslist.append([elem, lst[0], lst[1]])
     return reslist
 
-def threeSum2(nums):
-    nums.sort()
-    stopm = 0
-    stopz = 0
-    for i in range(len(nums)):
-        if nums[i] < 0:
-            stopm += 1 
-        elif nums[i] == 0:
-            stopz += 1
-    nump = nums[:stopm]
-    numq = nums[stopm:]
-    print (nump, numq)
-    reslist = []
-    if stopz >= 3:
-        reslist.append([0,0,0])
-    for i in range(0, len(numq)):
-        if i == 0 or numq[i] != numq[i-1]:
-            sublist = twoSum(nump, 0-numq[i], 0)
-            for lst in sublist:
-                reslist.append([lst[0], lst[1], numq[i]]) 
-    for i in range(0, len(nump)):
-        if i == 0 or nump[i] != nump[i-1]:
-            sublist = twoSum(numq, 0-nump[i], 0)
-            for lst in sublist:
-                reslist.append([nump[i], lst[0], lst[1]])
-    return reslist
     
 
 if __name__ == "__main__":
