@@ -1,21 +1,28 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandom-rhodes/fopnp/blob/mn/py3/chapter07/zen_utils.py
+# https://github.com/brandom-rhodes/fopnp/blob/mn/py3/chapter08/squares.py
 
-import socket
-from argparse import ArgumentParser
-import argparse
+import memcache, random, time, timeit
+
+def computer_square(mc, n):
+    value = mc.get('sq:%d' %n)
+    if value is None:
+        time.sleep(0.001)
+        value = n **2
+        mc.set('sq:%d'%n, value)
+    return value
+
+def main():
+    mc = memcache.Client(['127.0.0.1:11211'])
+
+    def make_request():
+        computer_square(mc, random.randint(0, 5000))
+
+    print('Ten successive runs:')
+    for i in range(1, 11):
+        print(' %.2fs' % timeit.timeit(make_request, number = 2000), end='')
+    print()
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Safe tls cliednt and server")
-    parser.add_argument('host', help='IP address or hostname' )
-    parser.add_argument('port', type=int, help='tcp port number')
-    parser.add_argument('-a', metavar ='cafile', default=None,
-                            help='authority: path to CA certificate PEM file')
-    parser.add_argument('-s', metavar='certifile', default=None, 
-                        help='run as server: apth to server PEM file')
-    args = parser.parse_args()
-    if args.s:
-        server(args.host, args.port, args.s, args.a)
-    else:
-        client(args.host, args.port, args.a)
+    main()
+
